@@ -101,33 +101,38 @@ public class Frame1 extends GUI_table implements ActionListener {
             doc[i]=doctorArray.get(i).getMedicalLicence();
         }
         getdoc =new JComboBox(doc);
-        getdoc.setBounds(600,525,150,20);
-        getdoc.setBackground(new Color(0xFFFFFF));
+        set_combobox(getdoc,600,525,150,20);
+//        getdoc.setBounds(600,525,150,20);
+//        getdoc.setBackground(new Color(0xFFFFFF));
 
         time = new JLabel();
         time.setText("CONSULTATION START TIME:                 CONSULTATION END TIME:");
         set_lable(time,30, 570, 700, 20,15);
 
 
-        String hours[] = { "HH","08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20","21","22" };
-        String min[] = { "MM","00", "15", "30", "45" };
+        String[] hours = { "HH","08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20","21","22" };
+        String[] min = { "MM","00", "15", "30", "45" };
 
         //J combo box
         getstarttime1 =new JComboBox(hours);
-        getstarttime1.setBounds(260,575,50,20);
-        getstarttime1.setBackground(new Color(0xFFFFFF));
+        set_combobox(getstarttime1,260,575,50,20);
+//        getstarttime1.setBounds(260,575,50,20);
+//        getstarttime1.setBackground(new Color(0xFFFFFF));
 
         getstarttime2 =new JComboBox(min);
-        getstarttime2.setBounds(340,575,50,20);
-        getstarttime2.setBackground(new Color(0xFFFFFF));
+        set_combobox(getstarttime2,340,575,50,20);
+//        getstarttime2.setBounds(340,575,50,20);
+//        getstarttime2.setBackground(new Color(0xFFFFFF));
 
         getendtime1 =new JComboBox(hours);
-        getendtime1.setBounds(618,575,50,20);
-        getendtime1.setBackground(new Color(0xFFFFFF));
+        set_combobox(getendtime1,618,575,50,20);
+//        getendtime1.setBounds(618,575,50,20);
+//        getendtime1.setBackground(new Color(0xFFFFFF));
 
         getendtime2 =new JComboBox(min);
-        getendtime2.setBounds(700,575,50,20);
-        getendtime2.setBackground(new Color(0xFFFFFF));
+        set_combobox(getendtime2,700,575,50,20);
+//        getendtime2.setBounds(700,575,50,20);
+//        getendtime2.setBackground(new Color(0xFFFFFF));
 
 
         date = new JLabel();
@@ -155,11 +160,11 @@ public class Frame1 extends GUI_table implements ActionListener {
 
 
         this.add(table);
-        this.add(getdoc);
-        this.add(getstarttime1);
-        this.add(getstarttime2);
-        this.add(getendtime1);
-        this.add(getendtime2);
+//        this.add(getdoc);
+//        this.add(getstarttime1);
+//        this.add(getstarttime2);
+//        this.add(getendtime1);
+//        this.add(getendtime2);
         this.add(getnote);
         this.add(addpho);
 
@@ -209,6 +214,11 @@ public class Frame1 extends GUI_table implements ActionListener {
             docconsulId = random[randomIndex];
             check_equal();
         }
+    }
+    public void set_combobox(JComboBox combo,int x, int y , int width , int height){
+        combo.setBounds(x,y,width,height);
+        combo.setBackground(new Color(0xFFFFFF));
+        this.add(combo);
     }
     public void set_lable(JLabel lable ,int x, int y , int width , int height,int font){
         lable.setBounds(x,y,width,height);
