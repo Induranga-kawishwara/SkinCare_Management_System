@@ -166,10 +166,6 @@ public class Frame1 extends GUI_table implements ActionListener {
 
 
 
-
-
-
-
         this.add(table);
         this.add(getnote);
         this.add(addpho);
@@ -181,7 +177,6 @@ public class Frame1 extends GUI_table implements ActionListener {
         window("Consultation",800,1000);
     }
     public void check_equal(){
-//        Duration duration = Duration.between(consulStart, consulEnd);
         int timedura = Integer.parseInt(entimeHou);
         boolean not_equal = true;
         for (Consultation consultation : consult) {
@@ -249,121 +244,97 @@ public class Frame1 extends GUI_table implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource()== submit) {
-
             try {
-                boolean virgin = false;
                 String regex = "^[A-Za-z]\\w{2,29}$";
                 Pattern p = Pattern.compile(regex);
-                if (10 > doctorArray.size()) {
-                    name = getname.getText().trim();
-                    surname = getsurname.getText().trim();
-                    Matcher f = p.matcher(name);
-                    Matcher s = p.matcher(surname);
-                    if (f.matches() && s.matches()) {
+                name = getname.getText().trim();
+                surname = getsurname.getText().trim();
+                Matcher f = p.matcher(name);
+                Matcher s = p.matcher(surname);
+                if (f.matches() && s.matches()) {
+                    try {
                         dateOfBirth = LocalDate.parse(getbirthday.getText().trim());
-                            phoneno = getphone.getText().trim();
-                            // validation for mobilenumber
-                            if (10 == phoneno.length()) {
+                        phoneno = getphone.getText().trim();
+                        // validation for mobilenumber
+                        if (10 == phoneno.length()) {
+                            try {
                                 Integer.parseInt(phoneno);
-                                patId = Integer.parseInt(getid.getText());
-                                docconsulId = (String) getdoc.getSelectedItem();
-                                for (Doctor doctor : doctorArray) {
-                                    if (docconsulId.equals(doctor.getMedicalLicence())) {
-                                        System.out.println("\n-Medical licence already exists-");
-                                        System.out.println("-Please re-enter the correct details-\n");
-                                        virgin = true;
-                                        break;
-                                    }
-                                }
-                                if (virgin) {
+                                try {
+                                    patId = Integer.parseInt(getid.getText());
+                                    docconsulId = (String) getdoc.getSelectedItem();
                                     sttimeHou = (String) getstarttime1.getSelectedItem();
                                     sttimeMin = (String) getstarttime2.getSelectedItem();
-                                    stasettime = sttimeHou+":"+sttimeMin+":00";
-                                    consulStart = LocalTime.parse(stasettime);
+                                    stasettime = sttimeHou + ":" + sttimeMin + ":00";
+                                    try {
+                                        consulStart = LocalTime.parse(stasettime);
+                                        entimeHou = (String) getdura.getSelectedItem();
+//                         entimeMin = (String) getendtime2.getSelectedItem();
+                                        consulEnd = consulStart.plusHours(Long.parseLong(entimeHou));
+                                        System.out.println(consulEnd);
+//                          consulEnd = LocalTime.parse(ensettime);
+                                        try {
+                                            cousulDate = LocalDate.parse(getdate.getText().trim());
+                                            if (cousulDate.isAfter(LocalDate.now()) && cousulDate.isBefore(LocalDate.now().plusYears(3))) {
+                                                note = getnote.getText();
+                                                check_equal();
+                                                System.out.println(consult.get(0));
+                                                try {
+                                                    FileInputStream file = new FileInputStream(addphopath.getText());
+                                                    byte data[] = new byte[file.available()];
+                                                    file.read(data);
+                                                    int i = 0;
 
-                                    entimeHou = (String) getdura.getSelectedItem();
-//                                    entimeMin = (String) getendtime2.getSelectedItem();
-                                    consulEnd = consulStart.plusHours(Long.parseLong(entimeHou));
-                                    System.out.println(consulEnd);
-//                                    consulEnd = LocalTime.parse(ensettime);
+                                                    for (byte b : data) {
+                                                        data[i] = (byte) (b ^ patId);
+                                                        i++;
+                                                    }
+                                                    FileOutputStream fos = new FileOutputStream(patId + name + again + ".jpg");
 
-                                    cousulDate = LocalDate.parse(getdate.getText().trim());
+                                                    fos.write(data);
+                                                    // Closing file
+                                                    fos.close();
+                                                    file.close();
+                                                    System.out.println("Encryption Done...");
+                                                    this.dispose();
+                                                    new Gui_main();
 
-                                    note = getnote.getText();
-                                    check_equal();
-                                    System.out.println(consult.get(0));
-                                    try{
-                                        FileInputStream file = new FileInputStream(addphopath.getText());
-                                        byte data[] = new byte[file.available()];
-                                        file.read(data);
-                                        int i = 0;
+                                                } catch (Exception ignored) {
+//                                                    this.dispose();
+//                                                    new Frame1pop();
+                                                }
+                                            } else {
+                                                JOptionPane.showMessageDialog(null, "Check You Entered Consultation Date", "Error", JOptionPane.ERROR_MESSAGE);
+                                            }
+                                            ///validate cousulDAte
 
-                                        for (byte b : data) {
-                                            data[i] = (byte)(b ^ patId);
-                                            i++;
+                                        } catch (Exception ignored) {
+                                            JOptionPane.showMessageDialog(null, "Check You Entered Date!!", "Error", JOptionPane.ERROR_MESSAGE);
                                         }
-                                        FileOutputStream fos = new FileOutputStream(patId+name+again+".jpg");
-
-                                        fos.write(data);
-
-                                        // Closing file
-                                        fos.close();
-                                        file.close();
-                                        System.out.println("Encryption Done...");
-
-                                    }catch (Exception ignored){
-
+                                    } catch (Exception ignored) {
+                                        JOptionPane.showMessageDialog(null, "Check You Entered Time and Duration!!", "Error", JOptionPane.ERROR_MESSAGE);
                                     }
+                                } catch (Exception ignored) {
+                                    System.out.println("ffff");
+                                    JOptionPane.showMessageDialog(null, "Check Your Phone Number!!", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
-                            } else {
-                                System.out.println("Check entered phone number!!!");
+                            }catch (Exception ignored){
+                                JOptionPane.showMessageDialog(null, "Check Your Patient ID!!", "Error", JOptionPane.ERROR_MESSAGE);
                             }
-                    } else {
-                        System.out.println("Check entered  First name or Sure name !!!!");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Check Your Phone Number!!", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }catch (Exception ignored){
+                        JOptionPane.showMessageDialog(null, "Check Your Birthday!!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                }
-                this.dispose();
-                new Gui_main();
+                } else{
+                        JOptionPane.showMessageDialog(null, "Check Your First Name And Surname!!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
             }catch (Exception ignored){
-                System.out.println("Invalid Input");
+                JOptionPane.showMessageDialog(null,"SOMETHING WRONG!!","Error", JOptionPane.ERROR_MESSAGE);
             }
 
-
-//            name = getname.getText().trim();
-//
-//            surname = getsurname.getText().trim();
-
-//            dateOfBirth = LocalDate.parse(getbirthday.getText().trim());
-
-//            phoneno = getphone.getText().trim();
-
-//            patId = getid.getText().trim();
-
-//            docconsulId = (String) getdoc.getSelectedItem();
-
-//            sttimeHou = (String) getstarttime1.getSelectedItem();
-//
-//
-//            sttimeMin = (String) getstarttime2.getSelectedItem();
-//            stasettime = sttimeHou+":"+sttimeMin+":00";
-//
-//            consulStart = LocalTime.parse(stasettime);
-//
-//            entimeHou = (String) getendtime1.getSelectedItem();
-//
-//            entimeMin = (String) getendtime2.getSelectedItem();
-//            ensettime = entimeHou+":"+entimeMin+":00";
-//
-//            consulEnd = LocalTime.parse(ensettime);
-
-//            cousulDate = LocalDate.parse(getdate.getText().trim());
-//
-//            note = getnote.getText();
-//            check_equal();
-//            System.out.println(consult.get(0));
-//
-//            this.dispose();
-//            new Gui_main();
+            this.dispose();
+            new Frame1pop();
 
         }else if (e.getSource()== pic){
             try {

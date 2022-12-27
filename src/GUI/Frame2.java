@@ -102,7 +102,6 @@ public class Frame2 extends GUI_table implements ActionListener {
             this.dispose();
             new Frame2(false);
         }
-
     }
     @Override
     public void button() {

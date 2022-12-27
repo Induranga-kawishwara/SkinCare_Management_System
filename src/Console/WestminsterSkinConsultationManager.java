@@ -356,7 +356,6 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
             } catch (Exception e) {
 //                e.printStackTrace();
                 System.out.println("Something Wrong!!!!! ");
-
             }
         }
     }
