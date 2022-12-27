@@ -14,6 +14,7 @@ public abstract class GUI_table extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); // DISPOSE_ON_CLOSE or 3
         setLocationRelativeTo(null);
         setResizable(false);
+//        getContentPane().setBackground(Color.white);
         setLayout(new BorderLayout());
         setVisible(true);
 

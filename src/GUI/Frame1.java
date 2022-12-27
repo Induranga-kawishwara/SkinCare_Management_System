@@ -9,7 +9,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.Duration;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -24,18 +26,21 @@ import  static Console.WestminsterSkinConsultationManager.consult;
 public class Frame1 extends GUI_table implements ActionListener {
 
 
-    private String name,surname,phoneno,patId,docconsulId,note,sttimeHou,sttimeMin,stasettime,entimeHou,entimeMin,ensettime;
+    private String name,surname,phoneno,docconsulId,note,sttimeHou,sttimeMin,stasettime,entimeHou;
 
-    private int cost;
+    private String filename = null;
+
+    private int cost,patId;
+    private int again = 0;
 
     private LocalDate dateOfBirth,cousulDate;
 
-    private LocalTime consulStart,consulEnd;
-    private JButton back,Cancel,submit;
+    private LocalTime consulStart,consulEnd,ensettime;
+    private JButton back,Cancel,submit,pic;
     JTextField getname,getbirthday,getid,getdate,getsurname,getphone;
-    JComboBox getdoc,getstarttime1,getstarttime2,getendtime1,getendtime2;
+    JComboBox getdoc,getstarttime1,getstarttime2, getdura;
     JTextArea getnote;
-    JLabel topic,colum,topic1,jname,birthday,id,time,date,jnote;
+    JLabel topic,colum,topic1,jname,birthday,id,time,date,jnote,addpho,addphopath;
     Frame1(){
 
 
@@ -102,37 +107,32 @@ public class Frame1 extends GUI_table implements ActionListener {
         }
         getdoc =new JComboBox(doc);
         set_combobox(getdoc,600,525,150,20);
-//        getdoc.setBounds(600,525,150,20);
-//        getdoc.setBackground(new Color(0xFFFFFF));
+
 
         time = new JLabel();
-        time.setText("CONSULTATION START TIME:                 CONSULTATION END TIME:");
+        time.setText("CONSULTATION START TIME:                 CONSULTATION DURATION:");
         set_lable(time,30, 570, 700, 20,15);
 
 
         String[] hours = { "HH","08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20","21","22" };
         String[] min = { "MM","00", "15", "30", "45" };
+        String[] dura = { "HH","01", "02", "03", "04", "05"};
 
         //J combo box
         getstarttime1 =new JComboBox(hours);
         set_combobox(getstarttime1,260,575,50,20);
-//        getstarttime1.setBounds(260,575,50,20);
-//        getstarttime1.setBackground(new Color(0xFFFFFF));
+
 
         getstarttime2 =new JComboBox(min);
         set_combobox(getstarttime2,340,575,50,20);
-//        getstarttime2.setBounds(340,575,50,20);
-//        getstarttime2.setBackground(new Color(0xFFFFFF));
 
-        getendtime1 =new JComboBox(hours);
-        set_combobox(getendtime1,618,575,50,20);
-//        getendtime1.setBounds(618,575,50,20);
-//        getendtime1.setBackground(new Color(0xFFFFFF));
+        getdura =new JComboBox(dura);
+        set_combobox(getdura,600,575,150,20);
 
-        getendtime2 =new JComboBox(min);
-        set_combobox(getendtime2,700,575,50,20);
-//        getendtime2.setBounds(700,575,50,20);
-//        getendtime2.setBackground(new Color(0xFFFFFF));
+//
+//        getendtime2 =new JComboBox(min);
+//        set_combobox(getendtime2,700,575,50,20);
+
 
 
         date = new JLabel();
@@ -153,20 +153,27 @@ public class Frame1 extends GUI_table implements ActionListener {
         getnote.setFont(new Font("console",Font.ITALIC,15));
         getnote.setLineWrap(true);
 
-        JLabel addpho = new JLabel();
+        addpho = new JLabel();
         addpho.setBounds(540, 700, 220, 200);
         addpho.setBackground(Color.white);
         addpho.setOpaque(true);
 
+        addphopath = new JLabel();
+        addphopath.setBounds(540, 660, 150, 20);
+        addphopath.setBackground(Color.white);
+        addphopath.setOpaque(true);
+
+
+
+
+
+
+
 
         this.add(table);
-//        this.add(getdoc);
-//        this.add(getstarttime1);
-//        this.add(getstarttime2);
-//        this.add(getendtime1);
-//        this.add(getendtime2);
         this.add(getnote);
         this.add(addpho);
+        this.add(addphopath);
 
 
         System.out.println("GUI file eka wada hutto");
@@ -174,9 +181,8 @@ public class Frame1 extends GUI_table implements ActionListener {
         window("Consultation",800,1000);
     }
     public void check_equal(){
-        Duration duration = Duration.between(consulStart, consulEnd);
-        int timedura = (int) duration.toHours();
-        int again = 0;
+//        Duration duration = Duration.between(consulStart, consulEnd);
+        int timedura = Integer.parseInt(entimeHou);
         boolean not_equal = true;
         for (Consultation consultation : consult) {
             if (docconsulId.equals(consultation.getDocconsulId())) {
@@ -194,7 +200,7 @@ public class Frame1 extends GUI_table implements ActionListener {
             }
         }
         if(again==0){
-            cost=(15+((timedura-1)*25));
+            cost=(timedura*15);
             System.out.println(cost);
 
         }else{
@@ -202,7 +208,7 @@ public class Frame1 extends GUI_table implements ActionListener {
             System.out.println(cost);
         }
         if(not_equal){
-            consult.add(new Consultation(name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note));
+            consult.add(new Consultation(name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost));
         }else{
             int docsiz=doctorArray.size();
             String [] random = new String[docsiz];
@@ -259,7 +265,7 @@ public class Frame1 extends GUI_table implements ActionListener {
                             // validation for mobilenumber
                             if (10 == phoneno.length()) {
                                 Integer.parseInt(phoneno);
-                                patId = getid.getText().trim();
+                                patId = Integer.parseInt(getid.getText());
                                 docconsulId = (String) getdoc.getSelectedItem();
                                 for (Doctor doctor : doctorArray) {
                                     if (docconsulId.equals(doctor.getMedicalLicence())) {
@@ -275,19 +281,39 @@ public class Frame1 extends GUI_table implements ActionListener {
                                     stasettime = sttimeHou+":"+sttimeMin+":00";
                                     consulStart = LocalTime.parse(stasettime);
 
-                                    entimeHou = (String) getendtime1.getSelectedItem();
-                                    entimeMin = (String) getendtime2.getSelectedItem();
-                                    ensettime = entimeHou+":"+entimeMin+":00";
-                                    consulEnd = LocalTime.parse(ensettime);
+                                    entimeHou = (String) getdura.getSelectedItem();
+//                                    entimeMin = (String) getendtime2.getSelectedItem();
+                                    consulEnd = consulStart.plusHours(Long.parseLong(entimeHou));
+                                    System.out.println(consulEnd);
+//                                    consulEnd = LocalTime.parse(ensettime);
 
                                     cousulDate = LocalDate.parse(getdate.getText().trim());
 
                                     note = getnote.getText();
                                     check_equal();
                                     System.out.println(consult.get(0));
+                                    try{
+                                        FileInputStream file = new FileInputStream(addphopath.getText());
+                                        byte data[] = new byte[file.available()];
+                                        file.read(data);
+                                        int i = 0;
 
-                                    this.dispose();
-                                    new Gui_main();
+                                        for (byte b : data) {
+                                            data[i] = (byte)(b ^ patId);
+                                            i++;
+                                        }
+                                        FileOutputStream fos = new FileOutputStream(patId+name+again+".jpg");
+
+                                        fos.write(data);
+
+                                        // Closing file
+                                        fos.close();
+                                        file.close();
+                                        System.out.println("Encryption Done...");
+
+                                    }catch (Exception ignored){
+
+                                    }
                                 }
                             } else {
                                 System.out.println("Check entered phone number!!!");
@@ -296,6 +322,8 @@ public class Frame1 extends GUI_table implements ActionListener {
                         System.out.println("Check entered  First name or Sure name !!!!");
                     }
                 }
+                this.dispose();
+                new Gui_main();
             }catch (Exception ignored){
                 System.out.println("Invalid Input");
             }
@@ -337,6 +365,15 @@ public class Frame1 extends GUI_table implements ActionListener {
 //            this.dispose();
 //            new Gui_main();
 
+        }else if (e.getSource()== pic){
+            try {
+                JFileChooser chooser = new JFileChooser();
+                chooser.showOpenDialog(null);
+                File f = chooser.getSelectedFile();
+                addpho.setIcon(new ImageIcon(f.toString()));
+                filename = f.getAbsolutePath();
+                addphopath.setText(filename);
+            }catch(Exception ignored){}
         }else{
             this.dispose();
             new Gui_main();
@@ -349,6 +386,9 @@ public class Frame1 extends GUI_table implements ActionListener {
         back = new JButton();
         back.setFont(new Font("SansSerif", Font.BOLD, 12));
         button_set(back,"Back",30,20,65,30);
+
+        pic = new JButton();
+        button_set(pic,"Pic",700, 660, 60, 20);
 
         submit = new JButton();
         button_set(submit,"Submit",550,920,80,30);

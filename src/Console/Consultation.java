@@ -12,17 +12,19 @@ public class Consultation extends Patient {
     private LocalTime consulEnd;
     private String docconsulId;
     private String conNote;
+    private double cost;
 
 
 
 
-    public Consultation(String name, String surname, LocalDate dateOfBirth, String phoneno, String patId, String docconsulId, LocalTime consulStart, LocalTime consulEnd, LocalDate conDate, String conNote) {
+    public Consultation(String name, String surname, LocalDate dateOfBirth, String phoneno, int patId, String docconsulId, LocalTime consulStart, LocalTime consulEnd, LocalDate conDate, String conNote,double cost) {
         super(name,surname,dateOfBirth,phoneno,patId);
         this.conDate = conDate;
         this.consulStart = consulStart;
         this.consulEnd = consulEnd;
         this.docconsulId = docconsulId;
         this.conNote = conNote;
+        this.cost=cost;
     }
 
     //getters and setters
@@ -66,6 +68,10 @@ public class Consultation extends Patient {
     public LocalTime getConsulEnd() {
         return consulEnd;
     }
+
+    public double getCost() {return cost;}
+
+    public void setCost(double cost) {this.cost = cost;}
 
     @Override
     public String toString() {
