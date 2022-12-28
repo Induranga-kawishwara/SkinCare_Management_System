@@ -44,7 +44,7 @@ public class Frame1pop extends GUI_table implements ActionListener {
 
         System.out.println("GUI file eka wada hutto");
         button();
-        window("GUI eke  2nd page eka pago",500,500);
+        window("You Entered Details",500,500);
     }
     public void button_set(JButton but,String name, int x, int y , int width , int height) {
         but.setBounds(x,y,width,height);

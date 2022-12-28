@@ -18,9 +18,10 @@ public class Frame2 extends GUI_table implements ActionListener {
 
     Frame2( boolean cat){
 
+        ImageIcon img = new ImageIcon("src/GUI/frame2.jpg");
         JLabel topic = new JLabel();
         topic.setText("ALL DOCTORS DETAILS");
-        topic.setBounds(290,20,550,20);
+        topic.setBounds(300,20,550,20);
         topic.setFont(new Font(Font.DIALOG_INPUT,Font.BOLD,20));
         //topic.setForeground(new Color(17, 17, 17));
 
@@ -28,7 +29,7 @@ public class Frame2 extends GUI_table implements ActionListener {
         colum.setText("|    Name     |   SurName   |   Birthday    |   Phone-NO   |   Licence   |Specialisation|");
         colum.setBounds(33,-70,850,300);
         colum.setFont(new Font(Font.DIALOG_INPUT,Font.BOLD,15));
-        colum.setForeground(new Color(246, 10, 43, 255));
+        colum.setForeground(new Color(253, 2, 2, 255));
 
 
         DefaultTableModel tableModel = new DefaultTableModel(0,6);
@@ -66,14 +67,21 @@ public class Frame2 extends GUI_table implements ActionListener {
                }
            }
        }
+        JLabel rat = new JLabel();
+        rat.setIcon(img);
+        rat.setBounds(0,0,900,500);
+//        rat.setpr(new Dimension(900,500));
+        rat.setOpaque(true);
 
         this.add(topic);
         this.add(colum);
         this.add(table);
 
 
+
         System.out.println("GUI file eka wada hutto");
         button();
+        this.add(rat);
         window("All Doctors Exist",900,500);
 
     }

@@ -45,7 +45,18 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                     case "5" -> west.ReadFile();
                     case "6" -> west.loaddata();
                     case "7" -> new Gui_main();
-                    case "8" -> start = false;
+                    case "8" -> {
+                        try {
+                            BufferedWriter temp = new BufferedWriter(new FileWriter("patient.txt"));
+                            for (Consultation con : consult) {
+                                temp.write(con.getName() + "\n" + con.getSurname() + "\n" + con.getDateOfBirth() + "\n" + con.getMobileNo() + "\n" + con.getPatientId() + "\n" + con.getDocconsulId() + "\n" + con.getConsulStart() + "\n" + con.getConsulEnd() + "\n" + con.getConDate() + "\n" + con.getConNote() + "\n" + con.getCost() + "\n\n");
+                            }
+                            temp.close();
+                        } catch (IOException e) {
+                            System.out.println("Something Wrong !!!!! ");
+                        }
+                        start = false;
+                    }
                     default -> System.out.println("\nInvalid input pls try again later\n");
                 }
             }catch (Exception e){
