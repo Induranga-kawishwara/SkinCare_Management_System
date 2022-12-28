@@ -1,7 +1,7 @@
 package GUI;
 
 import Console.Consultation;
-import Console.Doctor;
+
 
 
 import javax.swing.*;
@@ -9,9 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -59,8 +57,8 @@ public class Frame1 extends GUI_table implements ActionListener {
         JTable table = new JTable(tableModel);
         table.setBounds(40, 100, 700, 240);
 
-        for (Console.Doctor doctor : doctorArray) {
-            String[] details = {doctor.getName(), doctor.getSurname(), doctor.getMobileNo(), doctor.getMedicalLicence(), doctor.getSpecialisation()};
+        for (int i =0; doctorArray.size()>i;i++) {
+            String[] details = {doctorArray.get(i).getName(), doctorArray.get(i).getSurname(), doctorArray.get(i).getMobileNo(), doctorArray.get(i).getMedicalLicence(), doctorArray.get(i).getSpecialisation()};
             tableModel.addRow(details);
         }
 
@@ -129,11 +127,6 @@ public class Frame1 extends GUI_table implements ActionListener {
         getdura =new JComboBox(dura);
         set_combobox(getdura,600,575,150,20);
 
-//
-//        getendtime2 =new JComboBox(min);
-//        set_combobox(getendtime2,700,575,50,20);
-
-
 
         date = new JLabel();
         date.setText("CONSULTATION DATE(YYY-MM-DD):");
@@ -164,8 +157,6 @@ public class Frame1 extends GUI_table implements ActionListener {
         addphopath.setOpaque(true);
 
 
-
-
         this.add(table);
         this.add(getnote);
         this.add(addpho);
@@ -182,7 +173,11 @@ public class Frame1 extends GUI_table implements ActionListener {
         for (Consultation consultation : consult) {
             if (docconsulId.equals(consultation.getDocconsulId())) {
                 if (consultation.getConDate().isEqual(cousulDate)) {
-                    if (!consultation.getConsulStart().isBefore(consulStart) && !consultation.getConsulEnd().isAfter(consulEnd)) {
+                    if(consultation.getConsulStart().isBefore(consulStart) && consultation.getConsulEnd().isAfter(consulStart) ||
+                            consultation.getConsulStart().isBefore(consulEnd) && consultation.getConsulEnd().isAfter(consulEnd) ||
+                            consultation.getConsulStart().isBefore(consulStart) && consultation.getConsulEnd().isAfter(consulEnd) ||
+                            consultation.getConsulStart().isAfter(consulStart) && consultation.getConsulEnd().isBefore(consulEnd) )
+                    {
                         not_equal = false;
                         break;
                     }
@@ -196,6 +191,7 @@ public class Frame1 extends GUI_table implements ActionListener {
         }
         if(again==0){
             cost=(timedura*15);
+//            cost = (15 + ((timedura - 1) * 25));
             System.out.println(cost);
 
         }else{
@@ -204,6 +200,15 @@ public class Frame1 extends GUI_table implements ActionListener {
         }
         if(not_equal){
             consult.add(new Consultation(name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost));
+            try {
+                BufferedWriter temp  = new BufferedWriter(new FileWriter("patient.txt"));
+                for (Consultation con : consult) {
+                    temp.write(con.getName() + "\n" + con.getSurname() + "\n" + con.getDateOfBirth() + "\n" + con.getMobileNo() + "\n" + con.getPatientId() + "\n" + con.getDocconsulId() +"\n" + con.getConsulStart() +"\n" + con.getConsulEnd() +"\n" + con.getConDate() +"\n" + con.getConNote() +"\n" + con.getCost() +"\n\n");
+                }
+                temp.close();
+            }catch (IOException e){
+                System.out.println("Something Wrong !!!!! ");
+            }
         }else{
             int docsiz=doctorArray.size();
             String [] random = new String[docsiz];
@@ -279,11 +284,10 @@ public class Frame1 extends GUI_table implements ActionListener {
                                                 check_equal();
                                                 System.out.println(consult.get(0));
                                                 try {
-                                                    FileInputStream file = new FileInputStream(addphopath.getText());
+                                                    FileInputStream file = new FileInputStream(filename);
                                                     byte data[] = new byte[file.available()];
                                                     file.read(data);
                                                     int i = 0;
-
                                                     for (byte b : data) {
                                                         data[i] = (byte) (b ^ patId);
                                                         i++;
@@ -296,11 +300,11 @@ public class Frame1 extends GUI_table implements ActionListener {
                                                     file.close();
                                                     System.out.println("Encryption Done...");
                                                     this.dispose();
-                                                    new Gui_main();
+                                                    new Frame1pop();
 
                                                 } catch (Exception ignored) {
-//                                                    this.dispose();
-//                                                    new Frame1pop();
+                                                    this.dispose();
+                                                    new Frame1pop();
                                                 }
                                             } else {
                                                 JOptionPane.showMessageDialog(null, "Check You Entered Consultation Date", "Error", JOptionPane.ERROR_MESSAGE);
@@ -317,6 +321,7 @@ public class Frame1 extends GUI_table implements ActionListener {
                                     System.out.println("ffff");
                                     JOptionPane.showMessageDialog(null, "Check Your Phone Number!!", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
+
                             }catch (Exception ignored){
                                 JOptionPane.showMessageDialog(null, "Check Your Patient ID!!", "Error", JOptionPane.ERROR_MESSAGE);
                             }
@@ -333,8 +338,7 @@ public class Frame1 extends GUI_table implements ActionListener {
                 JOptionPane.showMessageDialog(null,"SOMETHING WRONG!!","Error", JOptionPane.ERROR_MESSAGE);
             }
 
-            this.dispose();
-            new Frame1pop();
+
 
         }else if (e.getSource()== pic){
             try {
@@ -349,7 +353,6 @@ public class Frame1 extends GUI_table implements ActionListener {
             this.dispose();
             new Gui_main();
         }
-
     }
 
     @Override
