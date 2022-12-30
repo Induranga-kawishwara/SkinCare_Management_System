@@ -33,8 +33,8 @@ public class Frame1pop extends GUI_table implements ActionListener {
                           "07.Start-Time          : "+consult.get(loc).getConsulStart()+"<br>"+
                           "08.End-Time            : "+consult.get(loc).getConsulEnd()+"<br>"+
                           "09.Consulted-Doctor    : "+consult.get(loc).getDocconsulId()+"<br>"+
-                          "10.Cost-for-Consulation: "+consult.get(loc).getCost()+"<br>"+
-                          "11.Additional-Note     : "+"<br>"+consult.get(loc).getConNote()+"</html>");
+                          "10.Cost-for-Consulation: "+consult.get(loc).getCost()+"<br></html>");
+
         details.setBounds(39, 10, 400, 400);
         details.setFont(new Font(Font.SERIF, Font.BOLD, 15));
 
@@ -46,8 +46,8 @@ public class Frame1pop extends GUI_table implements ActionListener {
         button();
         window("You Entered Details",500,500);
     }
-    public void button_set(JButton but,String name, int x, int y , int width , int height) {
-        but.setBounds(x,y,width,height);
+    public void button_set(JButton but,String name) {
+        but.setBounds(210,400,70,30);
         but.setText(name);
         System.out.println("button set eka asse");
         but.setFocusable(false);
@@ -66,7 +66,7 @@ public class Frame1pop extends GUI_table implements ActionListener {
     public void button() {
 
         ok = new JButton();
-        button_set(ok,"OK",210,400,70,30);
+        button_set(ok,"OK");
 
     }
 }

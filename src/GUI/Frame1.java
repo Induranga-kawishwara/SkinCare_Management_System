@@ -3,19 +3,28 @@ package GUI;
 import Console.Consultation;
 
 
-
+import javax.crypto.*;
+import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Base64;
+
 
 import static Console.WestminsterSkinConsultationManager.doctorArray;
 
@@ -24,7 +33,9 @@ import  static Console.WestminsterSkinConsultationManager.consult;
 public class Frame1 extends GUI_table implements ActionListener {
 
 
-    private String name,surname,phoneno,docconsulId,note,sttimeHou,sttimeMin,stasettime,entimeHou;
+    private String name,surname,phoneno,docconsulId,note,sttimeHou,sttimeMin,stasettime,entimeHou,notenkey;
+
+    private SecretKey notekey;
 
     private String filename = null;
 
@@ -209,7 +220,7 @@ public class Frame1 extends GUI_table implements ActionListener {
 //            System.out.println(cost);
         }
         if(not_equal){
-            consult.add(new Consultation(name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost));
+            consult.add(new Consultation(name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost,notenkey));
 //            try {
 //                BufferedWriter temp  = new BufferedWriter(new FileWriter("patient.txt"));
 //                for (Consultation con : consult) {
@@ -290,30 +301,99 @@ public class Frame1 extends GUI_table implements ActionListener {
 //                          consulEnd = LocalTime.parse(ensettime);
                                         try {
                                             cousulDate = LocalDate.parse(getdate.getText().trim());
+                                            System.out.println("cat");
                                             if (cousulDate.isAfter(LocalDate.now()) && cousulDate.isBefore(LocalDate.now().plusYears(3))) {
                                                 note = getnote.getText();
-                                                check_equal();
-                                                System.out.println(consult.get(0));
+//                                                System.out.println(consult.get(0));
                                                 try {
-                                                    FileInputStream file = new FileInputStream(filename);
-                                                    byte data[] = new byte[file.available()];
-                                                    file.read(data);
-                                                    int i = 0;
-                                                    for (byte b : data) {
-                                                        data[i] = (byte) (b ^ patId);
-                                                        i++;
-                                                    }
-                                                    FileOutputStream fos = new FileOutputStream(patId + name + again + ".jpg");
 
-                                                    fos.write(data);
-                                                    // Closing file
-                                                    fos.close();
-                                                    file.close();
-                                                    System.out.println("Encryption Done...");
+
+//                                                    KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
+//                                                    SecretKey myDesKey = keygenerator.generateKey();
+//
+//                                                    // Creating object of Cipher
+//                                                    Cipher desCipher;
+//                                                    desCipher = Cipher.getInstance("DES");
+//
+//
+//                                                    // Creating byte array to store string
+//                                                    byte[] text = note.getBytes("UTF8");
+//
+//                                                    // Encrypting text
+//                                                    desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
+//                                                    byte[] textEncrypted = desCipher.doFinal(text);
+//
+//                                                    // Converting encrypted byte array to string
+//                                                    note =  Base64.getEncoder().encodeToString(textEncrypted);
+//                                                    System.out.println(note);
+//
+//                                                    //// covert security key
+//
+//                                                    notenkey = Base64.getEncoder().encodeToString(myDesKey.getEncoded());
+//                                                    System.out.println(notenkey);
+//
+//                                                    /// covert  string to security
+//                                                    byte[] encodedKey = Base64.getDecoder().decode(notenkey);
+//                                                    notekey = new SecretKeySpec(encodedKey, 0, encodedKey.length, "DES");
+//                                                    System.out.println(notekey);
+//
+//                                                    /////
+//
+//                                                    /// Decrypting text
+//                                                    byte[] output =Base64.getDecoder().decode(note);
+//                                                    desCipher.init(Cipher.DECRYPT_MODE, notekey);
+//                                                    byte[] textDecrypted1 = desCipher.doFinal(output);
+//
+//                                                    // Converting decrypted byte array to string
+//                                                    String u = new String(textDecrypted1);
+//                                                    System.out.println(u);
+
+                                                    ////////////////////////////////////////////////////////////
+
+                                                    String key = "Bar12345Bar12345"; // 128 bit key
+                                                    // String key = "Bar12345Bar12345Bar12345"; // 192 bit key
+                                                    // String key = "Bar12345Bar12345Bar12345Bar12345"; // 256 bit key
+                                                    FileInputStream inFile = null;
+                                                    FileOutputStream outFile = null;
+                                                    try {
+                                                        inFile = new FileInputStream(filename);
+                                                        outFile = new FileOutputStream("output.png");
+                                                        Key secretKey = new SecretKeySpec(key.getBytes(), "AES");
+                                                        Cipher cipher = Cipher.getInstance("AES");
+                                                        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+                                                        byte[] input = new byte[64];
+                                                        int bytesRead;
+                                                        while ((bytesRead = inFile.read(input)) != -1) {
+                                                            byte[] output = cipher.update(input, 0, bytesRead);
+                                                            outFile.write(output);
+                                                        }
+                                                        byte[] output = cipher.doFinal();
+                                                        outFile.write(output);
+                                                        inFile.close();
+                                                        outFile.flush();
+                                                        outFile.close();
+                                                        System.out.println("File Encrypted.");
+                                                    } catch (Exception ignored) {
+
+                                                    }
+
+                                                    //////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                    check_equal();
                                                     this.dispose();
                                                     new Frame1pop();
 
                                                 } catch (Exception ignored) {
+                                                    check_equal();
                                                     this.dispose();
                                                     new Frame1pop();
                                                 }
@@ -351,12 +431,18 @@ public class Frame1 extends GUI_table implements ActionListener {
 
         }else if (e.getSource()== pic){
             try {
+
                 JFileChooser chooser = new JFileChooser();
                 chooser.showOpenDialog(null);
                 File f = chooser.getSelectedFile();
-                addpho.setIcon(new ImageIcon(f.toString()));
                 filename = f.getAbsolutePath();
                 addphopath.setText(filename);
+                ImageIcon MyImage = new ImageIcon(filename);
+                Image img = MyImage.getImage();
+                Image newImg = img.getScaledInstance(addpho.getWidth(), addpho.getHeight(), Image.SCALE_SMOOTH);
+                addpho.setIcon(new ImageIcon(newImg));
+
+
             }catch(Exception ignored){}
         }else{
             this.dispose();

@@ -1,5 +1,6 @@
 package Console;
 
+import javax.crypto.SecretKey;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -12,12 +13,13 @@ public class Consultation extends Patient {
     private LocalTime consulEnd;
     private String docconsulId;
     private String conNote;
+    private String notenkey;
     private double cost;
 
 
 
 
-    public Consultation(String name, String surname, LocalDate dateOfBirth, String phoneno, int patId, String docconsulId, LocalTime consulStart, LocalTime consulEnd, LocalDate conDate, String conNote,double cost) {
+    public Consultation(String name, String surname, LocalDate dateOfBirth, String phoneno, int patId, String docconsulId, LocalTime consulStart, LocalTime consulEnd, LocalDate conDate, String conNote,double cost,String notenkey) {
         super(name,surname,dateOfBirth,phoneno,patId);
         this.conDate = conDate;
         this.consulStart = consulStart;
@@ -25,6 +27,7 @@ public class Consultation extends Patient {
         this.docconsulId = docconsulId;
         this.conNote = conNote;
         this.cost=cost;
+        this.notenkey=notenkey;
     }
 
     //getters and setters
@@ -72,6 +75,14 @@ public class Consultation extends Patient {
     public double getCost() {return cost;}
 
     public void setCost(double cost) {this.cost = cost;}
+
+    public String getNotenkey() {
+        return notenkey;
+    }
+
+    public void setNotenkey(String notenkey) {
+        this.notenkey = notenkey;
+    }
 
     @Override
     public String toString() {

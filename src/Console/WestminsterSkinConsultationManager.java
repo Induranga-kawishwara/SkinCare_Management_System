@@ -5,6 +5,7 @@ import GUI.Gui_main;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -19,6 +20,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
     public static void main(String[] args) {
         WestminsterSkinConsultationManager west = new WestminsterSkinConsultationManager();
         west.loaddata();
+        west.paLoadFile();
         boolean start = true;
         do {
             try{
@@ -49,7 +51,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                         try {
                             BufferedWriter temp = new BufferedWriter(new FileWriter("patient.txt"));
                             for (Consultation con : consult) {
-                                temp.write(con.getName() + "\n" + con.getSurname() + "\n" + con.getDateOfBirth() + "\n" + con.getMobileNo() + "\n" + con.getPatientId() + "\n" + con.getDocconsulId() + "\n" + con.getConsulStart() + "\n" + con.getConsulEnd() + "\n" + con.getConDate() + "\n" + con.getConNote() + "\n" + con.getCost() + "\n\n");
+                                temp.write(con.getName() + "\n" + con.getSurname() + "\n" + con.getDateOfBirth() + "\n" + con.getMobileNo() + "\n" + con.getPatientId() + "\n" + con.getDocconsulId() + "\n" + con.getConsulStart() + "\n" + con.getConsulEnd() + "\n" + con.getConDate() + "\n" + con.getConNote() + "\n" + con.getCost() + "\n" + con.getNotenkey()+"\n\n");
                             }
                             temp.close();
                         } catch (IOException e) {
@@ -103,6 +105,27 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
         System.out.println("-----------------------------------------------------------------------------------------\n");
         return run;
     }
+    public void paLoadFile() {
+        ArrayList <String> tempArray = new ArrayList<>();
+        try {
+            String temp;
+            BufferedReader readFile =new BufferedReader(new FileReader("patient.txt"));
+
+            while (((temp= readFile.readLine()) != null)){
+                if(temp.equals("")){
+                    continue;
+                }else {
+                    tempArray.add(temp);
+                }
+            }
+            while ( 0 < (tempArray.size() / 12)) {
+
+                consult.add(new Consultation(tempArray.get(0), tempArray.get(1), LocalDate.parse(tempArray.get(2)), tempArray.get(3), Integer.parseInt(tempArray.get(4)), tempArray.get(5), LocalTime.parse(tempArray.get(6)), LocalTime.parse(tempArray.get(7)), LocalDate.parse(tempArray.get(8)), tempArray.get(9), Double.parseDouble(tempArray.get(10)),tempArray.get(11)));
+                tempArray.subList(0, 12).clear();
+            }
+        }catch (Exception ignored){
+        }
+    }
     @Override
     public void AddDoctor() {
         boolean virgin = true;
@@ -123,7 +146,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 //System.out.println(dat);
                 //Year thisYear = Year.now().minusYears(100);
                 //System.out.println(thisYear);dateOfBirth.isBefore(LocalDate.parse("2000-01-01"))
-                if(dateOfBirth.isAfter(LocalDate.now().minusYears(100)) && dateOfBirth.isBefore(LocalDate.now().minusYears(22))){
+                if(dateOfBirth.isAfter(LocalDate.now().minusYears(65)) && dateOfBirth.isBefore(LocalDate.now().minusYears(20))){
                     System.out.print("Enter mobile number: ");
                     String mobile = scanner.next().trim();
                     // validation for mobilenumber
