@@ -308,76 +308,121 @@ public class Frame1 extends GUI_table implements ActionListener {
                                                 try {
 
 
-//                                                    KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
-//                                                    SecretKey myDesKey = keygenerator.generateKey();
-//
-//                                                    // Creating object of Cipher
-//                                                    Cipher desCipher;
-//                                                    desCipher = Cipher.getInstance("DES");
-//
-//
-//                                                    // Creating byte array to store string
-//                                                    byte[] text = note.getBytes("UTF8");
-//
-//                                                    // Encrypting text
-//                                                    desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
-//                                                    byte[] textEncrypted = desCipher.doFinal(text);
-//
-//                                                    // Converting encrypted byte array to string
-//                                                    note =  Base64.getEncoder().encodeToString(textEncrypted);
-//                                                    System.out.println(note);
-//
-//                                                    //// covert security key
-//
-//                                                    notenkey = Base64.getEncoder().encodeToString(myDesKey.getEncoded());
-//                                                    System.out.println(notenkey);
-//
-//                                                    /// covert  string to security
-//                                                    byte[] encodedKey = Base64.getDecoder().decode(notenkey);
-//                                                    notekey = new SecretKeySpec(encodedKey, 0, encodedKey.length, "DES");
-//                                                    System.out.println(notekey);
-//
-//                                                    /////
-//
-//                                                    /// Decrypting text
-//                                                    byte[] output =Base64.getDecoder().decode(note);
-//                                                    desCipher.init(Cipher.DECRYPT_MODE, notekey);
-//                                                    byte[] textDecrypted1 = desCipher.doFinal(output);
-//
-//                                                    // Converting decrypted byte array to string
-//                                                    String u = new String(textDecrypted1);
-//                                                    System.out.println(u);
+                                                    KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
+                                                    SecretKey myDesKey = keygenerator.generateKey();
+
+                                                    // Creating object of Cipher
+                                                    Cipher desCipher;
+                                                    desCipher = Cipher.getInstance("DES");
+
+
+                                                    // Creating byte array to store string
+                                                    byte[] text = note.getBytes("UTF8");
+
+                                                    // Encrypting text
+                                                    desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
+                                                    byte[] textEncrypted = desCipher.doFinal(text);
+
+                                                    // Converting encrypted byte array to string
+                                                    note =  Base64.getEncoder().encodeToString(textEncrypted);
+                                                    System.out.println(note);
+
+                                                    //// covert security key
+
+                                                    notenkey = Base64.getEncoder().encodeToString(myDesKey.getEncoded());
+                                                    System.out.println(notenkey);
+
+                                                    /// covert  string to security
+                                                    byte[] encodedKey = Base64.getDecoder().decode(notenkey);
+                                                    notekey = new SecretKeySpec(encodedKey, 0, encodedKey.length, "DES");
+                                                    System.out.println(notekey);
+
+                                                    /////
+
+                                                    /// Decrypting text
+                                                    byte[] output =Base64.getDecoder().decode(note);
+                                                    desCipher.init(Cipher.DECRYPT_MODE, notekey);
+                                                    byte[] textDecrypted1 = desCipher.doFinal(output);
+
+                                                    // Converting decrypted byte array to string
+                                                    String u = new String(textDecrypted1);
+                                                    System.out.println(u);
 
                                                     ////////////////////////////////////////////////////////////
 
-                                                    String key = "Bar12345Bar12345"; // 128 bit key
-                                                    // String key = "Bar12345Bar12345Bar12345"; // 192 bit key
-                                                    // String key = "Bar12345Bar12345Bar12345Bar12345"; // 256 bit key
-                                                    FileInputStream inFile = null;
-                                                    FileOutputStream outFile = null;
-                                                    try {
-                                                        inFile = new FileInputStream(filename);
-                                                        outFile = new FileOutputStream("output.png");
-                                                        Key secretKey = new SecretKeySpec(key.getBytes(), "AES");
-                                                        Cipher cipher = Cipher.getInstance("AES");
-                                                        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-                                                        byte[] input = new byte[64];
-                                                        int bytesRead;
-                                                        while ((bytesRead = inFile.read(input)) != -1) {
-                                                            byte[] output = cipher.update(input, 0, bytesRead);
-                                                            outFile.write(output);
-                                                        }
-                                                        byte[] output = cipher.doFinal();
-                                                        outFile.write(output);
-                                                        inFile.close();
-                                                        outFile.flush();
-                                                        outFile.close();
-                                                        System.out.println("File Encrypted.");
-                                                    } catch (Exception ignored) {
-
-                                                    }
+//                                                    String key = "Bar12345Bar12345"; // 128 bit key
+//                                                    // String key = "Bar12345Bar12345Bar12345"; // 192 bit key
+//                                                    // String key = "Bar12345Bar12345Bar12345Bar12345"; // 256 bit key
+//                                                    FileInputStream inFile = null;
+//                                                    FileOutputStream outFile = null;
+//                                                    try {
+//                                                        inFile = new FileInputStream(filename);
+//                                                        outFile = new FileOutputStream("output.png");
+//                                                        Key secretKey = new SecretKeySpec(key.getBytes(), "AES");
+//                                                        Cipher cipher = Cipher.getInstance("AES");
+//                                                        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+//                                                        byte[] input = new byte[64];
+//                                                        int bytesRead;
+//                                                        while ((bytesRead = inFile.read(input)) != -1) {
+//                                                            byte[] output = cipher.update(input, 0, bytesRead);
+//                                                            outFile.write(output);
+//                                                        }
+//                                                        byte[] output = cipher.doFinal();
+//                                                        outFile.write(output);
+//                                                        inFile.close();
+//                                                        outFile.flush();
+//                                                        outFile.close();
+//                                                        System.out.println("File Encrypted.");
+//                                                    } catch (Exception ignored) {
+//
+//                                                    }
 
                                                     //////////////////////////////////////////////////////////////////////
+                                                    try
+                                                    {
+//                                                        Cipher cipher=Cipher.getInstance("DES");
+//                                                        KeyGenerator keyg=KeyGenerator.getInstance("DES");
+//                                                        Key key=keyg.generateKey();
+
+                                                        desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
+
+                                                        CipherInputStream cipt=new CipherInputStream(new FileInputStream("ico.jpg"), desCipher);
+
+                                                        FileOutputStream fileip=new FileOutputStream("encrypt.jpg");
+
+                                                        int i;
+                                                        while((i=cipt.read())!=-1)
+                                                        {
+                                                            fileip.write(i);
+
+                                                        }
+                                                        fileip.close();
+
+
+
+                                                        desCipher.init(Cipher.DECRYPT_MODE, myDesKey);
+
+                                                        CipherInputStream ciptt=new CipherInputStream(new FileInputStream("encrypt.jpg"), desCipher);
+
+                                                        FileOutputStream fileop=new FileOutputStream("decrypt.jpg");
+
+                                                        int j;
+                                                        while((j=ciptt.read())!=-1)
+                                                        {
+                                                            fileop.write(j);
+                                                        }
+                                                        fileop.close();
+
+
+
+
+                                                    }
+                                                    catch(Exception Ignore)
+                                                    {
+//                                                        e.printStackTrace();
+                                                    }
+
+
 
 
 
