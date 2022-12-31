@@ -40,7 +40,7 @@ public class Frame1 extends GUI_table implements ActionListener {
     private String filename = null;
 
     private int cost,patId;
-    private int again = 0;
+    private int again = 1;
 
     private LocalDate dateOfBirth,cousulDate;
 
@@ -205,12 +205,8 @@ public class Frame1 extends GUI_table implements ActionListener {
                 }
             }
         }
-        for(Consultation consultation : consult){
-            if(Objects.equals(consultation.getPatientId(), patId)){
-                again++;
-            }
-        }
-        if(again==0){
+
+        if(again==1){
             cost=(timedura*15);
 //            cost = (15 + ((timedura - 1) * 25));
 //            System.out.println(cost);
@@ -220,7 +216,8 @@ public class Frame1 extends GUI_table implements ActionListener {
 //            System.out.println(cost);
         }
         if(not_equal){
-            consult.add(new Consultation(name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost,notenkey));
+//            consult.add(new Consultation(name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost,notenkey));
+            consult.add(new Consultation(again,name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost,notenkey));
 //            try {
 //                BufferedWriter temp  = new BufferedWriter(new FileWriter("patient.txt"));
 //                for (Consultation con : consult) {
@@ -304,6 +301,12 @@ public class Frame1 extends GUI_table implements ActionListener {
                                             System.out.println("cat");
                                             if (cousulDate.isAfter(LocalDate.now()) && cousulDate.isBefore(LocalDate.now().plusYears(3))) {
                                                 note = getnote.getText();
+
+                                                for(Consultation consultation : consult){
+                                                    if(Objects.equals(consultation.getPatientId(), patId)){
+                                                        again++;
+                                                    }
+                                                }
 //                                                System.out.println(consult.get(0));
                                                 try {
 
@@ -317,7 +320,7 @@ public class Frame1 extends GUI_table implements ActionListener {
 
 
                                                     // Creating byte array to store string
-                                                    byte[] text = note.getBytes("UTF8");
+                                                    byte[] text = note.getBytes(StandardCharsets.UTF_8);
 
                                                     // Encrypting text
                                                     desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
@@ -332,21 +335,21 @@ public class Frame1 extends GUI_table implements ActionListener {
                                                     notenkey = Base64.getEncoder().encodeToString(myDesKey.getEncoded());
                                                     System.out.println(notenkey);
 
-                                                    /// covert  string to security
-                                                    byte[] encodedKey = Base64.getDecoder().decode(notenkey);
-                                                    notekey = new SecretKeySpec(encodedKey, 0, encodedKey.length, "DES");
-                                                    System.out.println(notekey);
-
-                                                    /////
-
-                                                    /// Decrypting text
-                                                    byte[] output =Base64.getDecoder().decode(note);
-                                                    desCipher.init(Cipher.DECRYPT_MODE, notekey);
-                                                    byte[] textDecrypted1 = desCipher.doFinal(output);
-
-                                                    // Converting decrypted byte array to string
-                                                    String u = new String(textDecrypted1);
-                                                    System.out.println(u);
+//                                                    // covert  string to security
+//                                                    byte[] encodedKey = Base64.getDecoder().decode(notenkey);
+//                                                    notekey = new SecretKeySpec(encodedKey, 0, encodedKey.length, "DES");
+//                                                    System.out.println(notekey);
+//
+//                                                    /////
+//
+//                                                    /// Decrypting text
+//                                                    byte[] output =Base64.getDecoder().decode(note);
+//                                                    desCipher.init(Cipher.DECRYPT_MODE, notekey);
+//                                                    byte[] textDecrypted1 = desCipher.doFinal(output);
+//
+//                                                    // Converting decrypted byte array to string
+//                                                    String u = new String(textDecrypted1);
+//                                                    System.out.println(u);
 
                                                     ////////////////////////////////////////////////////////////
 
@@ -386,9 +389,9 @@ public class Frame1 extends GUI_table implements ActionListener {
 
                                                         desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
 
-                                                        CipherInputStream cipt=new CipherInputStream(new FileInputStream("ico.jpg"), desCipher);
+                                                        CipherInputStream cipt=new CipherInputStream(new FileInputStream(filename), desCipher);
 
-                                                        FileOutputStream fileip=new FileOutputStream("encrypt.jpg");
+                                                        FileOutputStream fileip=new FileOutputStream(patId+name+again+"-encrypt.jpg");
 
                                                         int i;
                                                         while((i=cipt.read())!=-1)
@@ -400,18 +403,18 @@ public class Frame1 extends GUI_table implements ActionListener {
 
 
 
-                                                        desCipher.init(Cipher.DECRYPT_MODE, myDesKey);
-
-                                                        CipherInputStream ciptt=new CipherInputStream(new FileInputStream("encrypt.jpg"), desCipher);
-
-                                                        FileOutputStream fileop=new FileOutputStream("decrypt.jpg");
-
-                                                        int j;
-                                                        while((j=ciptt.read())!=-1)
-                                                        {
-                                                            fileop.write(j);
-                                                        }
-                                                        fileop.close();
+//                                                        desCipher.init(Cipher.DECRYPT_MODE, myDesKey);
+//
+//                                                        CipherInputStream ciptt=new CipherInputStream(new FileInputStream("encrypt.jpg"), desCipher);
+//
+//                                                        FileOutputStream fileop=new FileOutputStream("decrypt.jpg");
+//
+//                                                        int j;
+//                                                        while((j=ciptt.read())!=-1)
+//                                                        {
+//                                                            fileop.write(j);
+//                                                        }
+//                                                        fileop.close();
 
 
 
@@ -435,12 +438,12 @@ public class Frame1 extends GUI_table implements ActionListener {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                     check_equal();
                                                     this.dispose();
-                                                    new Frame1pop();
+                                                    new Frame1pop(true,0,0);
 
                                                 } catch (Exception ignored) {
                                                     check_equal();
                                                     this.dispose();
-                                                    new Frame1pop();
+                                                    new Frame1pop(true,0,0);
                                                 }
                                             } else {
                                                 JOptionPane.showMessageDialog(null, "Check You Entered Consultation Date", "Error", JOptionPane.ERROR_MESSAGE);

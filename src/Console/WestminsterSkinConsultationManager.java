@@ -51,7 +51,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                         try {
                             BufferedWriter temp = new BufferedWriter(new FileWriter("patient.txt"));
                             for (Consultation con : consult) {
-                                temp.write(con.getName() + "\n" + con.getSurname() + "\n" + con.getDateOfBirth() + "\n" + con.getMobileNo() + "\n" + con.getPatientId() + "\n" + con.getDocconsulId() + "\n" + con.getConsulStart() + "\n" + con.getConsulEnd() + "\n" + con.getConDate() + "\n" + con.getConNote() + "\n" + con.getCost() + "\n" + con.getNotenkey()+"\n\n");
+                                temp.write(con.getWhichco() + "\n" +con.getName() + "\n" + con.getSurname() + "\n" + con.getDateOfBirth() + "\n" + con.getMobileNo() + "\n" + con.getPatientId() + "\n" + con.getDocconsulId() + "\n" + con.getConsulStart() + "\n" + con.getConsulEnd() + "\n" + con.getConDate() + "\n" + con.getConNote() + "\n" + con.getCost() + "\n" + con.getNotenkey()+"\n\n");
                             }
                             temp.close();
                         } catch (IOException e) {
@@ -118,10 +118,10 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                     tempArray.add(temp);
                 }
             }
-            while ( 0 < (tempArray.size() / 12)) {
+            while ( 0 < (tempArray.size() / 13)) {
 
-                consult.add(new Consultation(tempArray.get(0), tempArray.get(1), LocalDate.parse(tempArray.get(2)), tempArray.get(3), Integer.parseInt(tempArray.get(4)), tempArray.get(5), LocalTime.parse(tempArray.get(6)), LocalTime.parse(tempArray.get(7)), LocalDate.parse(tempArray.get(8)), tempArray.get(9), Double.parseDouble(tempArray.get(10)),tempArray.get(11)));
-                tempArray.subList(0, 12).clear();
+                consult.add(new Consultation(Integer.parseInt(tempArray.get(0)), tempArray.get(1), tempArray.get(2), LocalDate.parse(tempArray.get(3)), tempArray.get(4), Integer.parseInt(tempArray.get(5)), tempArray.get(6), LocalTime.parse(tempArray.get(7)), LocalTime.parse(tempArray.get(8)), LocalDate.parse(tempArray.get(9)), tempArray.get(10),Double.parseDouble(tempArray.get(11)),tempArray.get(12)));
+                tempArray.subList(0, 13).clear();
             }
         }catch (Exception ignored){
         }

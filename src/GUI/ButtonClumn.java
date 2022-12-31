@@ -7,94 +7,125 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import static Console.WestminsterSkinConsultationManager.consult;
+
 //OUR MAIN CLASS
-public class ButtonClumn extends GUI_table  {
+public class ButtonClumn extends GUI_table implements ActionListener {
+    private boolean rat;
+    protected static int selectID ;
+    private JTextField PaID;
+    private  JButton ok,submit,back;
 
-    private  JButton ok;
+    public ButtonClumn(boolean rat,int pati){
 
-    public ButtonClumn(){
+        this.rat = rat;
+        selectID=pati;
 
-        ImageIcon img = new ImageIcon("src/GUI/frame2.jpg");
         JLabel topic = new JLabel();
         topic.setText("ALL FUCKERS");
-        topic.setBounds(300,20,550,20);
-        topic.setFont(new Font(Font.DIALOG_INPUT,Font.BOLD,20));
+        topic.setBounds(370, 20, 550, 20);
+        topic.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
 
-        Object[][] data=
-                {
-                        {"1","Man Utd",2013,"21"},
-                        {"2","Man City",2014,"3"},
-                        {"3","Chelsea",2015,"7"},
-                        {"4","Arsenal",1999,"10"},
-                        {"5","Liverpool",1990,"19"},
-                        {"6","Everton",1974,"1"},
-                };
-
-        //COLUMN HEADERS
-        String[] columnHeaders ={"Position","Team","Last Year Won","Trophies"};
-        //FORM TITLE
-
-        DefaultTableModel tableModel = new DefaultTableModel(data,columnHeaders);
-        JTable table = new JTable(tableModel);
-//        table.setBounds(35,100,800,300);
-
-        table.getColumnModel().getColumn(1).setCellRenderer(new ButtonRenderer());;
-
-        //SET CUSTOM EDITOR TO TEAMS COLUMN
-        table.getColumnModel().getColumn(1).setCellEditor(new ButtonEditor(new JTextField()));
-
-        JScrollPane pane=new JScrollPane(table);
-        pane.setSize(800,300);
-
-//        ButtonClumn bc=new ButtonClumn();
-//        bc.setVisible(true);
-
-        //DATA FOR OUR TABLE
-        //CREATE OUR TABLE AND SET HEADER
-//        JTable table=new JTable(data,columnHeaders);
-
-        //SET CUSTOM RENDERER TO TEAMS COLUMN
+        if(rat) {
+            PaID = new JTextField();
+            PaID.setBounds(280,200,300,60);
+            PaID.setFont(new Font("console",Font.ITALIC,15));
+            this.add(PaID);
 
 
-        //SCROLLPANE,SET SZE,SET CLOSE OPERATION
+
+        }else{
+
+            //COLUMN HEADERS
+            String[] columnHeaders = {"Consultation-No","Patient-Id", "Name", "SurName", "Birthday", " Phone-N0", "Doctor-Id", "Date","Start-Time","End-Time","Cost"};
+            //FORM TITLE
+
+            DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, 0);
+            JTable table = new JTable(tableModel);
+
+
+            for (Console.Consultation Con : consult) {
+                if(selectID == Con.getPatientId()) {
+                    String[] details = {String.valueOf(Con.getWhichco()), String.valueOf(Con.getPatientId()),Con.getName(), Con.getSurname(), String.valueOf(Con.getDateOfBirth()), Con.getMobileNo(), Con.getDocconsulId(), String.valueOf(Con.getConDate()), String.valueOf(Con.getConsulStart()), String.valueOf(Con.getConsulEnd()), String.valueOf(Con.getCost())};
+                    tableModel.addRow(details);
+                }
+
+            }
+
+            table.getColumnModel().getColumn(0).setCellRenderer(new ButtonRenderer());
+
+            //SET CUSTOM EDITOR TO TEAMS COLUMN
+            table.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JTextField()));
+
+            JScrollPane pane = new JScrollPane(table);
+//        pane.setSize(800,300);
+            pane.setBounds(35, 70, 800, 300);
+
+
+            //DATA FOR OUR TABLE
+
+            //CREATE OUR TABLE AND SET HEADER
+
+
+            //SET CUSTOM RENDERER TO TEAMS COLUMN
+
+
+            //SCROLLPANE,SET SZE,SET CLOSE OPERATION
+
+            this.add(pane);
+        }
+
         this.add(topic);
-        this.add(pane);
-
-
-//        this.add(colum);
-//        this.add(table);
-
-
-
-        System.out.println("GUI file eka wada hutto");
         button();
-//        this.add(rat);
-        window("All Doctors Exist",900,500);
+
+        window("Your All Consultations",900,500);
     }
-    public void button_set(JButton but,String name) {
-        but.setBounds(210,400,70,30);
+    public void button_set(JButton but,String name,int x , int y) {
+        but.setBounds(x,y,80,30);
         but.setText(name);
         System.out.println("button set eka asse");
         but.setFocusable(false);
-        but.addActionListener(e -> {
-            dispose();
-            new Gui_main();
-        });
+        but.addActionListener(this);
         this.add(but);
     }
 
     @Override
     public void button() {
 
-        ok = new JButton();
-        button_set(ok,"OK");
+        if(rat){
+            submit = new JButton();
+            button_set(submit,"SUBMIT",400,400);
 
+            back = new JButton();
+            button_set(back,"BACK",30,20);
+
+        }else{
+            ok = new JButton();
+            button_set(ok,"OK",400,400);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()== ok) {
+            this.dispose();
+            new Gui_main();
+
+        }else if (e.getSource()== submit){
+            int patientID = Integer.parseInt(PaID.getText().trim());
+//            int patientID = 0;
+            this.dispose();
+            new ButtonClumn(false,patientID);
+
+        }else{
+            this.dispose();
+            new Gui_main();
+        }
     }
 }
 
 //BUTTON RENDERER CLASS
-class ButtonRenderer extends JButton implements  TableCellRenderer
-{
+class ButtonRenderer extends JButton implements  TableCellRenderer {
 
     //CONSTRUCTOR
     public ButtonRenderer() {
@@ -114,8 +145,7 @@ class ButtonRenderer extends JButton implements  TableCellRenderer
 }
 
 //BUTTON EDITOR CLASS
-class ButtonEditor extends DefaultCellEditor
-{
+class ButtonEditor extends DefaultCellEditor {
     protected JButton btn;
     private String lbl;
     private Boolean clicked;
@@ -155,8 +185,11 @@ class ButtonEditor extends DefaultCellEditor
 
         if(clicked)
         {
+            new Frame1pop(false,ButtonClumn.selectID,Integer.parseInt(lbl));
+            System.out.println(lbl);
             //SHOW US SOME MESSAGE
-            JOptionPane.showMessageDialog(btn, lbl+" Clicked");
+//            JOptionPane.showMessageDialog(btn, lbl+" Clicked");
+
         }
         //SET IT TO FALSE NOW THAT ITS CLICKED
         clicked=false;

@@ -61,7 +61,8 @@ public class Gui_main extends GUI_table implements ActionListener {
             new Frame2(true);
 
         }else{
-            new ButtonClumn();
+            this.dispose();
+            new ButtonClumn(true,0);
         }
     }
     @Override

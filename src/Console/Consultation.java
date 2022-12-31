@@ -7,7 +7,7 @@ import java.time.LocalTime;
 public class Consultation extends Patient {
 
     //localDateTime stores both date and time unlike Local date which stores only the date
-
+    private int whichco;
     private LocalDate conDate;
     private LocalTime consulStart;
     private LocalTime consulEnd;
@@ -19,8 +19,9 @@ public class Consultation extends Patient {
 
 
 
-    public Consultation(String name, String surname, LocalDate dateOfBirth, String phoneno, int patId, String docconsulId, LocalTime consulStart, LocalTime consulEnd, LocalDate conDate, String conNote,double cost,String notenkey) {
+    public Consultation(int whichco,String name, String surname, LocalDate dateOfBirth, String phoneno, int patId, String docconsulId, LocalTime consulStart, LocalTime consulEnd, LocalDate conDate, String conNote,double cost,String notenkey) {
         super(name,surname,dateOfBirth,phoneno,patId);
+        this.whichco=whichco;
         this.conDate = conDate;
         this.consulStart = consulStart;
         this.consulEnd = consulEnd;
@@ -32,6 +33,15 @@ public class Consultation extends Patient {
 
     //getters and setters
     //consultation date
+
+    public int getWhichco() {
+        return whichco;
+    }
+
+    public void setWhichco(int whichco) {
+        this.whichco = whichco;
+    }
+
     public LocalDate getConDate() {
         return conDate;
     }
