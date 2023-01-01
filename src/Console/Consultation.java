@@ -96,16 +96,16 @@ public class Consultation extends Patient {
 
     @Override
     public String toString() {
-        return  "01.Name                : " + this.getName() + '\n' +
-                "02.SurName             : " + this.getSurname() + '\n' +
-                "03.Date-of-Birth       : " + this.getDateOfBirth() + '\n' +
-                "04.Mobile-No           : " + this.getMobileNo() + '\n' +
-                "05.Patient-ID          : " + this.getPatientId() + '\n' +
-                "06.Consultation-Date   : " + conDate +'\n'+
-                "07.Start-Time          : " + consulStart +'\n'+
-                "08.End-Time            : " + consulEnd +'\n'+
-                "09.Consulted-Doctor    : " + docconsulId +'\n'+
-                "10.Cost-for-Consulation: " + cost+'\n'+
-                "11.Additional-Note  : \n" + conNote +'\n';
+        return  "01.Name                 : " + this.getName() + '\n' +
+                "02.SurName              : " + this.getSurname() + '\n' +
+                "03.Date-of-Birth        : " + this.getDateOfBirth() + '\n' +
+                "04.Mobile-No            : " + this.getMobileNo() + '\n' +
+                "05.Patient-ID           : " + this.getPatientId() + '\n' +
+                "06.Consultation-Date    : " + conDate +'\n'+
+                "07.Start-Time           : " + consulStart +'\n'+
+                "08.End-Time             : " + consulEnd +'\n'+
+                "09.Consulted-Doctor     : " + docconsulId +'\n'+
+                "10.Cost-for-Consultation: " + cost+'\n'+
+                "11.Additional-Note      : \n" + conNote +'\n';
     }
 }

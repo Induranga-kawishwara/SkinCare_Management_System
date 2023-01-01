@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.Arrays;
 import java.util.Base64;
 
 import static Console.WestminsterSkinConsultationManager.consult;
@@ -102,7 +101,6 @@ public class Frame1pop extends GUI_table implements ActionListener {
                         // covert  string to security
                         byte[] encodedKey = Base64.getDecoder().decode(con.getNotenkey());
                         SecretKey notekey = new SecretKeySpec(encodedKey, 0, encodedKey.length, "DES");
-                        System.out.println(notekey);
 
                         /// Decrypting text
 
@@ -156,7 +154,6 @@ public class Frame1pop extends GUI_table implements ActionListener {
     public void button_set(JButton but,String name) {
         but.setBounds(210,420,70,30);
         but.setText(name);
-        System.out.println("button set eka asse");
         but.setFocusable(false);
         but.addActionListener(this);
         this.add(but);

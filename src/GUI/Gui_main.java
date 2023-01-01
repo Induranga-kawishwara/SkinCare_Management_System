@@ -31,7 +31,6 @@ public class Gui_main extends GUI_table implements ActionListener {
         label1.setOpaque(true);
 
 
-        System.out.println("GUI file eka wada hutto");
         button();
 
         this.add(label);
@@ -45,7 +44,6 @@ public class Gui_main extends GUI_table implements ActionListener {
         but.setText(name);
         but.setFont(new Font(Font.SERIF,Font.BOLD,15));
         but.setForeground(new Color(0xFFFFFF));
-        System.out.println("button set eka asse");
         but.setFocusable(false);
         but.setBackground(Color.blue);
         but.addActionListener(this);

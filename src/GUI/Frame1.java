@@ -4,8 +4,6 @@ import Console.Consultation;
 
 
 import javax.crypto.*;
-import javax.crypto.spec.DESKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -13,12 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -183,7 +177,6 @@ public class Frame1 extends GUI_table implements ActionListener {
         this.add(addphopath);
 
 
-        System.out.println("GUI file eka wada hutto");
         button();
         this.add(rat);
         window("Consultation",800,1000);
@@ -208,25 +201,16 @@ public class Frame1 extends GUI_table implements ActionListener {
 
         if(again==1){
             cost=(timedura*15);
-//            cost = (15 + ((timedura - 1) * 25));
-//            System.out.println(cost);
+
 
         }else{
             cost = 25*timedura;
-//            System.out.println(cost);
         }
+
         if(not_equal){
-//            consult.add(new Consultation(name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost,notenkey));
+
             consult.add(new Consultation(again,name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost,notenkey));
-//            try {
-//                BufferedWriter temp  = new BufferedWriter(new FileWriter("patient.txt"));
-//                for (Consultation con : consult) {
-//                    temp.write(con.getName() + "\n" + con.getSurname() + "\n" + con.getDateOfBirth() + "\n" + con.getMobileNo() + "\n" + con.getPatientId() + "\n" + con.getDocconsulId() +"\n" + con.getConsulStart() +"\n" + con.getConsulEnd() +"\n" + con.getConDate() +"\n" + con.getConNote() +"\n" + con.getCost() +"\n\n");
-//                }
-//                temp.close();
-//            }catch (IOException e){
-//                System.out.println("Something Wrong !!!!! ");
-//            }
+
         }else{
             int docsiz=doctorArray.size();
             String [] random = new String[docsiz];
@@ -259,7 +243,6 @@ public class Frame1 extends GUI_table implements ActionListener {
     public void button_set(JButton but,String name, int x, int y , int width , int height) {
         but.setBounds(x,y,width,height);
         but.setText(name);
-        System.out.println("button set eka asse");
         but.setFocusable(false);
         but.addActionListener(this);
         this.add(but);
@@ -292,13 +275,9 @@ public class Frame1 extends GUI_table implements ActionListener {
                                     try {
                                         consulStart = LocalTime.parse(stasettime);
                                         entimeHou = (String) getdura.getSelectedItem();
-//                         entimeMin = (String) getendtime2.getSelectedItem();
                                         consulEnd = consulStart.plusHours(Long.parseLong(entimeHou));
-                                        System.out.println(consulEnd);
-//                          consulEnd = LocalTime.parse(ensettime);
                                         try {
                                             cousulDate = LocalDate.parse(getdate.getText().trim());
-                                            System.out.println("cat");
                                             if (cousulDate.isAfter(LocalDate.now()) && cousulDate.isBefore(LocalDate.now().plusYears(3))) {
                                                 note = getnote.getText();
 
@@ -307,7 +286,6 @@ public class Frame1 extends GUI_table implements ActionListener {
                                                         again++;
                                                     }
                                                 }
-//                                                System.out.println(consult.get(0));
                                                 try {
 
                                                     ///// encrypt/////////////////////
@@ -330,66 +308,20 @@ public class Frame1 extends GUI_table implements ActionListener {
 
                                                     // Converting encrypted byte array to string
                                                     note =  Base64.getEncoder().encodeToString(textEncrypted);
-                                                    System.out.println(note);
+
 
                                                     //// covert security key
 
                                                     notenkey = Base64.getEncoder().encodeToString(myDesKey.getEncoded());
-                                                    System.out.println(notenkey);
 
-//                                                    // covert  string to security
-//                                                    byte[] encodedKey = Base64.getDecoder().decode(notenkey);
-//                                                    notekey = new SecretKeySpec(encodedKey, 0, encodedKey.length, "DES");
-//                                                    System.out.println(notekey);
-//
-//                                                    /////
-//
-//                                                    /// Decrypting text
-//                                                    byte[] output =Base64.getDecoder().decode(note);
-//                                                    desCipher.init(Cipher.DECRYPT_MODE, notekey);
-//                                                    byte[] textDecrypted1 = desCipher.doFinal(output);
-//
-//                                                    // Converting decrypted byte array to string
-//                                                    String u = new String(textDecrypted1);
-//                                                    System.out.println(u);
 
-                                                    ////////////////////////////////////////////////////////////
 
-//                                                    String key = "Bar12345Bar12345"; // 128 bit key
-//                                                    // String key = "Bar12345Bar12345Bar12345"; // 192 bit key
-//                                                    // String key = "Bar12345Bar12345Bar12345Bar12345"; // 256 bit key
-//                                                    FileInputStream inFile = null;
-//                                                    FileOutputStream outFile = null;
-//                                                    try {
-//                                                        inFile = new FileInputStream(filename);
-//                                                        outFile = new FileOutputStream("output.png");
-//                                                        Key secretKey = new SecretKeySpec(key.getBytes(), "AES");
-//                                                        Cipher cipher = Cipher.getInstance("AES");
-//                                                        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-//                                                        byte[] input = new byte[64];
-//                                                        int bytesRead;
-//                                                        while ((bytesRead = inFile.read(input)) != -1) {
-//                                                            byte[] output = cipher.update(input, 0, bytesRead);
-//                                                            outFile.write(output);
-//                                                        }
-//                                                        byte[] output = cipher.doFinal();
-//                                                        outFile.write(output);
-//                                                        inFile.close();
-//                                                        outFile.flush();
-//                                                        outFile.close();
-//                                                        System.out.println("File Encrypted.");
-//                                                    } catch (Exception ignored) {
-//
-//                                                    }
 
                                                     //////////////////////////////////////////////////////////////////////
                                                     try
                                                     {
-//                                                        Cipher cipher=Cipher.getInstance("DES");
-//                                                        KeyGenerator keyg=KeyGenerator.getInstance("DES");
-//                                                        Key key=keyg.generateKey();
 
-                                                        desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
+//                                                        desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
 
                                                         CipherInputStream cipt=new CipherInputStream(new FileInputStream(filename), desCipher);
 
@@ -402,40 +334,8 @@ public class Frame1 extends GUI_table implements ActionListener {
 
                                                         }
                                                         fileip.close();
-
-
-
-//                                                        desCipher.init(Cipher.DECRYPT_MODE, myDesKey);
-//
-//                                                        CipherInputStream ciptt=new CipherInputStream(new FileInputStream("encrypt.jpg"), desCipher);
-//
-//                                                        FileOutputStream fileop=new FileOutputStream("decrypt.jpg");
-//
-//                                                        int j;
-//                                                        while((j=ciptt.read())!=-1)
-//                                                        {
-//                                                            fileop.write(j);
-//                                                        }
-//                                                        fileop.close();
-
-
-
-
                                                     }
-                                                    catch(Exception Ignore)
-                                                    {
-//                                                        e.printStackTrace();
-                                                    }
-
-
-
-
-
-
-
-
-
-
+                                                    catch(Exception ignored) {}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                     check_equal();

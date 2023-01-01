@@ -124,7 +124,6 @@ public class frame3 extends GUI_table implements ActionListener {
     public void button_set(JButton but,String name,int x , int y) {
         but.setBounds(x,y,80,30);
         but.setText(name);
-        System.out.println("button set eka asse");
         but.setFocusable(false);
         but.addActionListener(this);
         this.add(but);
@@ -235,7 +234,6 @@ class ButtonEditor extends DefaultCellEditor {
         if(clicked)
         {
             new Frame1pop(false, frame3.selectID,Integer.parseInt(lbl));
-            System.out.println(lbl);
             //SHOW US SOME MESSAGE
 //            JOptionPane.showMessageDialog(btn, lbl+" Clicked");
 

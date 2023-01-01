@@ -42,7 +42,6 @@ public class Frame2 extends GUI_table implements ActionListener {
 
            }
        }else{
-           System.out.println("sort eka hutto");
            int i = doctorArray.size();
            String [] sort = new String[i];
            for (int j = 0; j < i;j++) {
@@ -79,7 +78,6 @@ public class Frame2 extends GUI_table implements ActionListener {
 
 
 
-        System.out.println("GUI file eka wada hutto");
         button();
         this.add(rat);
         window("All Doctors Exist",900,500);
@@ -90,7 +88,6 @@ public class Frame2 extends GUI_table implements ActionListener {
     public void button_set(JButton but,String name, int x, int y , int width , int height) {
         but.setBounds(x,y,width,height);
         but.setText(name);
-        System.out.println("button set eka asse");
         but.setFocusable(false);
         but.addActionListener(this);
         this.add(but);
@@ -101,12 +98,10 @@ public class Frame2 extends GUI_table implements ActionListener {
             this.dispose();
             new Gui_main();//animus class call
         } else if (e.getSource()==reset) {
-            System.out.println("fuuuuuuuuu");
             this.dispose();
             new Frame2(true);
 
         } else if (e.getSource()==sort){
-            System.out.println("fuuuuuuuuu");
             this.dispose();
             new Frame2(false);
         }
@@ -114,7 +109,6 @@ public class Frame2 extends GUI_table implements ActionListener {
     @Override
     public void button() {
         back = new JButton();
-        back.setFont(new Font("SansSerif", Font.BOLD, 12));
         button_set(back,"Back",30,20,65,30);
 
         reset = new JButton();

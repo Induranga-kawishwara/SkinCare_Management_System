@@ -57,13 +57,14 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                         } catch (IOException e) {
                             System.out.println("Something Wrong !!!!! ");
                         }
+                        System.out.println("Patient details saved in a \"patient.txt\" File.");
                         start = false;
                     }
-                    default -> System.out.println("\nInvalid input pls try again later\n");
+                    default -> System.out.println("\nInvalid Input please Try Again Later\n");
                 }
             }catch (Exception e){
                 e.printStackTrace();
-                System.out.println("Invalid input");
+                System.out.println("Invalid Input");
             }
         }while (start);
     }
@@ -142,10 +143,6 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
             if(f.matches() && s.matches()){
                 System.out.print("Enter date of birth(YYYY-MM-DD) : ");
                 LocalDate dateOfBirth = LocalDate.parse(scanner.next());
-                //int dat = dateOfBirth.getYear();
-                //System.out.println(dat);
-                //Year thisYear = Year.now().minusYears(100);
-                //System.out.println(thisYear);dateOfBirth.isBefore(LocalDate.parse("2000-01-01"))
                 if(dateOfBirth.isAfter(LocalDate.now().minusYears(65)) && dateOfBirth.isBefore(LocalDate.now().minusYears(20))){
                     System.out.print("Enter mobile number: ");
                     String mobile = scanner.next().trim();
@@ -156,8 +153,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                         String licence = scanner.next().trim();
                         for (Doctor doctor : doctorArray) {
                             if (licence.equals(doctor.getMedicalLicence())) {
-                                System.out.println("\n-Medical licence already exists-");
-                                System.out.println("-Please re-enter the correct details-\n");
+                                System.out.println("\n-Medical Licence Already Exists-");
                                 virgin = false;
                                 break;
                             }
@@ -165,8 +161,8 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                         if (virgin) {
                             System.out.print("specialisation : ");
                             String spec = scanner.next().trim();
-
                             doctorArray.add(new Doctor(name, surname, dateOfBirth, mobile, licence, spec));
+                            System.out.println("\nDoctor Details Added Successfully!!");
                         }
                     }else{
                         System.out.println("Check entered phone number!!!");
@@ -174,30 +170,6 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 }else {
                     System.out.println("Check your birthday!!");
                 }
-//                System.out.print("Enter mobile number: ");
-//                String mobile = scanner.next().trim();
-//                // validation for mobilenumber
-//                if ( 10 == mobile.length()){
-//                    Integer.parseInt(mobile);
-//                    System.out.print("Enter the licence : ");
-//                    String licence = scanner.next().trim();
-//                    for (Doctor doctor : doctorArray) {
-//                        if (licence.equals(doctor.getMedicalLicence())) {
-//                            System.out.println("\n-Medical licence already exists-");
-//                            System.out.println("-Please re-enter the correct details-\n");
-//                            virgin = false;
-//                            break;
-//                        }
-//                    }
-//                    if (virgin) {
-//                        System.out.print("specialisation : ");
-//                        String spec = scanner.next().trim();
-//
-//                        doctorArray.add(new Doctor(name, surname, dateOfBirth, mobile, licence, spec));
-//                    }
-//                }else{
-//                    System.out.println("Check entered phone number!!!");
-//                }
             }else {
                 System.out.println("Check entered  First name or Sure name !!!!");
             }
@@ -388,7 +360,6 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 }
                 tempre.close();
             } catch (Exception e) {
-//                e.printStackTrace();
                 System.out.println("Something Wrong!!!!! ");
             }
         }
