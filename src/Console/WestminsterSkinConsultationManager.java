@@ -48,16 +48,16 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                     case "6" -> west.loaddata();
                     case "7" -> new Gui_main();
                     case "8" -> {
-                        try {
-                            BufferedWriter temp = new BufferedWriter(new FileWriter("patient.txt"));
-                            for (Consultation con : consult) {
-                                temp.write(con.getWhichco() + "\n" +con.getName() + "\n" + con.getSurname() + "\n" + con.getDateOfBirth() + "\n" + con.getMobileNo() + "\n" + con.getPatientId() + "\n" + con.getDocconsulId() + "\n" + con.getConsulStart() + "\n" + con.getConsulEnd() + "\n" + con.getConDate() + "\n" + con.getConNote() + "\n" + con.getCost() + "\n" + con.getNotenkey()+"\n\n");
-                            }
-                            temp.close();
-                        } catch (IOException e) {
-                            System.out.println("Something Wrong !!!!! ");
-                        }
-                        System.out.println("Patient details saved in a \"patient.txt\" File.");
+//                        try {
+//                            BufferedWriter temp = new BufferedWriter(new FileWriter("patient.txt"));
+//                            for (Consultation con : consult) {
+//                                temp.write(con.getWhichco() + "\n" +con.getName() + "\n" + con.getSurname() + "\n" + con.getDateOfBirth() + "\n" + con.getMobileNo() + "\n" + con.getPatientId() + "\n" + con.getDocconsulId() + "\n" + con.getConsulStart() + "\n" + con.getConsulEnd() + "\n" + con.getConDate() + "\n" + con.getConNote() + "\n" + con.getCost() + "\n" + con.getNotenkey()+"\n\n");
+//                            }
+//                            temp.close();
+//                        } catch (IOException e) {
+//                            System.out.println("Something Wrong !!!!! ");
+//                        }
+//                        System.out.println("Patient details saved in a \"patient.txt\" File.");
                         start = false;
                     }
                     default -> System.out.println("\nInvalid Input please Try Again Later\n");
