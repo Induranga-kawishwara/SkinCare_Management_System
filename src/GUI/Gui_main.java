@@ -23,7 +23,7 @@ public class Gui_main extends GUI_table implements ActionListener {
         label.setBounds(10,2,400,450);
         label.setFont(new Font("SansSerif", Font.BOLD, 15));
         label.setBackground(Color.white);
-        label.setOpaque(true);
+       //label.setOpaque(true);
 
         JLabel label1 = new JLabel();
         label1.setBounds(0,0,800,500);
@@ -62,17 +62,17 @@ public class Gui_main extends GUI_table implements ActionListener {
 
         }else{
             this.dispose();
-            new ButtonClumn(true,0);
+            new frame3(true,0);
         }
     }
     @Override
     public void button() {
         button1 = new JButton();
-        button_set(button1,"CONSULTATION",100);
+        button_set(button1,"CONSULTATION",120);
         button2 = new JButton();
-        button_set(button2,"All DOCTORS DETAILS",180);
+        button_set(button2,"All DOCTORS DETAILS",200);
         button3 = new JButton();
-        button_set(button3,"VIEW HISTORY",260);
+        button_set(button3,"VIEW HISTORY",280);
 
 
     }

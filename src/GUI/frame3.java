@@ -1,7 +1,10 @@
 package GUI;
+import Console.Consultation;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.ErrorManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,34 +13,70 @@ import javax.swing.table.TableCellRenderer;
 import static Console.WestminsterSkinConsultationManager.consult;
 
 //OUR MAIN CLASS
-public class ButtonClumn extends GUI_table implements ActionListener {
+public class frame3 extends GUI_table implements ActionListener {
+    private int width,height;
     private boolean rat;
     protected static int selectID ;
     private JTextField PaID;
     private  JButton ok,submit,back;
 
-    public ButtonClumn(boolean rat,int pati){
+    public frame3(boolean rat, int pati){
 
         this.rat = rat;
         selectID=pati;
 
+        ImageIcon ima = new ImageIcon("src/GUI/frame3.jpg");
+
         JLabel topic = new JLabel();
-        topic.setText("ALL FUCKERS");
-        topic.setBounds(370, 20, 550, 20);
-        topic.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+        topic.setText("Your Previous Consultations");
+        topic.setFont (new Font ("TimesRoman", Font.BOLD | Font.ITALIC, 20));
+        topic.setForeground(Color.white);
+
+
+        JLabel image = new JLabel();
+        image.setIcon(ima);
+
+
+//        topic.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+
+
 
         if(rat) {
+            width=500;
+            height=500;
+            topic.setBounds(110, 50, 550, 20);
+            image.setBounds(0,0,500,500);
+
+            JLabel pationIdlable = new JLabel();
+            pationIdlable.setText("Enter Your Patient-Id :");
+            pationIdlable.setBounds(115, 170, 550, 20);
+            pationIdlable.setForeground(Color.white);
+            pationIdlable.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 18));
+
             PaID = new JTextField();
-            PaID.setBounds(280,200,300,60);
+            PaID.setBounds(90,230,300,50);
             PaID.setFont(new Font("console",Font.ITALIC,15));
+            this.add(pationIdlable);
             this.add(PaID);
 
 
 
+
         }else{
+            width=910;
+            height=550;
+
+            topic.setBounds(310, 20, 550, 20);
+            image.setBounds(0,0,910,550);
+
+            JLabel message = new JLabel();
+            message.setText("(Click On No In This Table To See Your Added Note And Picture)");
+            message.setBounds(180, 380, 800, 20);
+            message.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 15));
+            message.setForeground(Color.red);
 
             //COLUMN HEADERS
-            String[] columnHeaders = {"Consultation-No","Patient-Id", "Name", "SurName", "Birthday", " Phone-N0", "Doctor-Id", "Date","Start-Time","End-Time","Cost"};
+            String[] columnHeaders = {"No","Patient-Id", "Name", "SurName", "Birthday", " Phone-N0", "Doctor-Id", "Date","Start-Time","End-Time","Cost"};
             //FORM TITLE
 
             DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, 0);
@@ -59,7 +98,7 @@ public class ButtonClumn extends GUI_table implements ActionListener {
 
             JScrollPane pane = new JScrollPane(table);
 //        pane.setSize(800,300);
-            pane.setBounds(35, 70, 800, 300);
+            pane.setBounds(20, 70, 850, 300);
 
 
             //DATA FOR OUR TABLE
@@ -73,12 +112,14 @@ public class ButtonClumn extends GUI_table implements ActionListener {
             //SCROLLPANE,SET SZE,SET CLOSE OPERATION
 
             this.add(pane);
+            this.add(message);
         }
 
         this.add(topic);
         button();
+        this.add(image);
 
-        window("Your All Consultations",900,500);
+        window("Your All Consultations",width,height);
     }
     public void button_set(JButton but,String name,int x , int y) {
         but.setBounds(x,y,80,30);
@@ -94,14 +135,14 @@ public class ButtonClumn extends GUI_table implements ActionListener {
 
         if(rat){
             submit = new JButton();
-            button_set(submit,"SUBMIT",400,400);
+            button_set(submit,"SUBMIT",280,400);
 
             back = new JButton();
-            button_set(back,"BACK",30,20);
+            button_set(back,"BACK",140,400);
 
         }else{
             ok = new JButton();
-            button_set(ok,"OK",400,400);
+            button_set(ok,"OK",400,450);
         }
     }
 
@@ -112,10 +153,23 @@ public class ButtonClumn extends GUI_table implements ActionListener {
             new Gui_main();
 
         }else if (e.getSource()== submit){
-            int patientID = Integer.parseInt(PaID.getText().trim());
-//            int patientID = 0;
-            this.dispose();
-            new ButtonClumn(false,patientID);
+            try {
+                int patientID = Integer.parseInt(PaID.getText().trim());
+                for(int i=0; i<consult.size();i++) {
+                    if(patientID==consult.get(i).getPatientId()) {
+                        this.dispose();
+                        new frame3(false, patientID);
+                        break;
+                    }else{
+                        if(i==consult.size()-1){
+                            JOptionPane.showMessageDialog(null,"Couldn't Find Your ID", "Error",JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    }
+                }
+            }catch (Exception ignored){
+                JOptionPane.showMessageDialog(null,"Enter Your Patient ID Correctly", "Error",JOptionPane.ERROR_MESSAGE);
+            }
 
         }else{
             this.dispose();
@@ -127,11 +181,6 @@ public class ButtonClumn extends GUI_table implements ActionListener {
 //BUTTON RENDERER CLASS
 class ButtonRenderer extends JButton implements  TableCellRenderer {
 
-    //CONSTRUCTOR
-    public ButtonRenderer() {
-        //SET BUTTON PROPERTIES
-        setOpaque(true);
-    }
     @Override
     public Component getTableCellRendererComponent(JTable table, Object obj,
                                                    boolean selected, boolean focused, int row, int col) {
@@ -185,7 +234,7 @@ class ButtonEditor extends DefaultCellEditor {
 
         if(clicked)
         {
-            new Frame1pop(false,ButtonClumn.selectID,Integer.parseInt(lbl));
+            new Frame1pop(false, frame3.selectID,Integer.parseInt(lbl));
             System.out.println(lbl);
             //SHOW US SOME MESSAGE
 //            JOptionPane.showMessageDialog(btn, lbl+" Clicked");

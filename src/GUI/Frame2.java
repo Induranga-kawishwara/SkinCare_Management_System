@@ -71,7 +71,7 @@ public class Frame2 extends GUI_table implements ActionListener {
         rat.setIcon(img);
         rat.setBounds(0,0,900,500);
 //        rat.setpr(new Dimension(900,500));
-        rat.setOpaque(true);
+        //rat.setOpaque(true);
 
         this.add(topic);
         this.add(colum);

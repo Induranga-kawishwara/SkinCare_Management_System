@@ -310,6 +310,8 @@ public class Frame1 extends GUI_table implements ActionListener {
 //                                                System.out.println(consult.get(0));
                                                 try {
 
+                                                    ///// encrypt/////////////////////
+
 
                                                     KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
                                                     SecretKey myDesKey = keygenerator.generateKey();

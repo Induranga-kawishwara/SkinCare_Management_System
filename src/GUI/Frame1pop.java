@@ -25,6 +25,11 @@ public class Frame1pop extends GUI_table implements ActionListener {
 
     Frame1pop(boolean pop,int ID , int how){
         this.pop = pop;
+        ImageIcon background = new ImageIcon("src/GUI/popup.jpg");
+
+        JLabel image = new JLabel();
+        image.setIcon(background);
+        image.setBounds(0,0,500,530);
 
         if(pop) {
             name="You Entered Details";
@@ -32,7 +37,7 @@ public class Frame1pop extends GUI_table implements ActionListener {
             JLabel topic = new JLabel();
             topic.setText("YOUR CONSULTATION");
             topic.setBounds(150, 20, 550, 20);
-            topic.setForeground(new Color(0x5659D0));
+            topic.setForeground(new Color(0x1B1B1C));
             topic.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
 
 
@@ -52,7 +57,7 @@ public class Frame1pop extends GUI_table implements ActionListener {
                     "10.Cost-for-Consulation: " + consult.get(loc).getCost() + "<br></html>");
 
             details.setBounds(39, 10, 400, 400);
-            details.setFont(new Font(Font.SERIF, Font.BOLD, 15));
+            details.setFont(new Font("TimesRoman", Font.BOLD | Font.ITALIC, 15));
 
 
             this.add(topic);
@@ -63,7 +68,7 @@ public class Frame1pop extends GUI_table implements ActionListener {
             JLabel topic = new JLabel();
             topic.setText("ADDITIONAL NOTE : ");
             topic.setBounds(150, 20, 550, 20);
-            topic.setForeground(new Color(0x5659D0));
+            topic.setForeground(new Color(0x0A0A0A));
             topic.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
 
             JTextArea getnote = new JTextArea();
@@ -75,7 +80,7 @@ public class Frame1pop extends GUI_table implements ActionListener {
             JLabel topic1 = new JLabel();
             topic1.setText("PICTURE : ");
             topic1.setBounds(50, 290, 550, 20);
-            topic1.setForeground(new Color(0x5659D0));
+            topic1.setForeground(new Color(0x131313));
             topic1.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
 
             JLabel addpho = new JLabel();
@@ -85,7 +90,8 @@ public class Frame1pop extends GUI_table implements ActionListener {
 
             for(Consultation con : consult){
                 if(con.getWhichco()==how && con.getPatientId()==ID){
-                    System.out.println(how);
+
+                    /////////////////////Decrypt /////////////////////////////////////////////
 
                     try {
 
@@ -138,9 +144,11 @@ public class Frame1pop extends GUI_table implements ActionListener {
             this.add(topic1);
             this.add(addpho);
 
+
         }
 
         button();
+        this.add(image);
         window(name,500,530);
     }
 
