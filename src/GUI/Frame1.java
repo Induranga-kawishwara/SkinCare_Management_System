@@ -29,8 +29,6 @@ public class Frame1 extends GUI_table implements ActionListener {
 
     private String name,surname,phoneno,docconsulId,note,sttimeHou,sttimeMin,stasettime,entimeHou,notenkey;
 
-    private SecretKey notekey;
-
     private String filename = null;
 
     private int cost,patId;
@@ -38,7 +36,7 @@ public class Frame1 extends GUI_table implements ActionListener {
 
     private LocalDate dateOfBirth,cousulDate;
 
-    private LocalTime consulStart,consulEnd,ensettime;
+    private LocalTime consulStart,consulEnd;
     private JButton back,Cancel,submit,pic;
     private JTextField getname,getbirthday,getid,getdate,getsurname,getphone;
     private JComboBox getdoc,getstarttime1,getstarttime2, getdura;
@@ -187,11 +185,9 @@ public class Frame1 extends GUI_table implements ActionListener {
         for (Consultation consultation : consult) {
             if (docconsulId.equals(consultation.getDocconsulId())) {
                 if (consultation.getConDate().isEqual(cousulDate)) {
-                    if(consultation.getConsulStart().isBefore(consulStart) && consultation.getConsulEnd().isAfter(consulStart) ||
-                            consultation.getConsulStart().isBefore(consulEnd) && consultation.getConsulEnd().isAfter(consulEnd) ||
-                            consultation.getConsulStart().isBefore(consulStart) && consultation.getConsulEnd().isAfter(consulEnd) ||
-                            consultation.getConsulStart().isAfter(consulStart) && consultation.getConsulEnd().isBefore(consulEnd) )
-                    {
+                    if ((consultation.getConsulStart().isBefore(consulStart)) && (consultation.getConsulEnd().isAfter(consulStart)) ||
+                            (consultation.getConsulStart().isBefore(consulEnd)) && ((consultation.getConsulEnd()).isAfter(consulEnd)) ||
+                            ((consultation.getConsulStart()).equals(consulStart)) || ((consultation.getConsulEnd()).equals(consulEnd))) {
                         not_equal = false;
                         break;
                     }
@@ -203,6 +199,7 @@ public class Frame1 extends GUI_table implements ActionListener {
             cost=(timedura*15);
 
 
+
         }else{
             cost = 25*timedura;
         }
@@ -210,6 +207,7 @@ public class Frame1 extends GUI_table implements ActionListener {
         if(not_equal){
 
             consult.add(new Consultation(again,name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost,notenkey));
+
 
         }else{
             int docsiz=doctorArray.size();
