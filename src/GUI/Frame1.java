@@ -218,7 +218,7 @@ public class Frame1 extends GUI_table implements ActionListener {
             Random rand = new Random();
             int randomIndex = rand.nextInt(random.length);
             docconsulId = random[randomIndex];
-            again = 0 ;
+            again = 1 ;
             check_equal();
         }
     }
