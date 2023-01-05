@@ -234,7 +234,6 @@ public class Frame1 extends GUI_table implements ActionListener {
             } catch (IOException e) {
                 System.out.println("Something Wrong !!!!! ");
             }
-//            System.out.println("Patient details saved in a \"patient.txt\" File.");
 
 
         }else{
@@ -249,7 +248,6 @@ public class Frame1 extends GUI_table implements ActionListener {
             Random rand = new Random();
             int randomIndex = rand.nextInt(random.length);
             docconsulId = random[randomIndex];
-//            again = again ;
             randomnum ++;
             check_equal();
         }

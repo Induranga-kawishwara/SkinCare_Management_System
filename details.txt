@@ -3,17 +3,6 @@
                         1st DOCTOR'S DETAILS
 --------------------------------------------------------------------
 
-01.Name             : sdfsdfs
-02.SurName          : sdfsdf
-03.Date-of-Birth    : 2009-09-09
-04.Mobile-No        : 1234567898
-05.MedicalLicence   : xzcz
-06.Specialisation   : xzcxzc
-
---------------------------------------------------------------------
-                        2nd DOCTOR'S DETAILS
---------------------------------------------------------------------
-
 01.Name             : asdsfsdf
 02.SurName          : sdfsdgfyfghfg
 03.Date-of-Birth    : 3009-09-09
@@ -22,7 +11,7 @@
 06.Specialisation   : asdasda
 
 --------------------------------------------------------------------
-                        3rd DOCTOR'S DETAILS
+                        2nd DOCTOR'S DETAILS
 --------------------------------------------------------------------
 
 01.Name             : dsdgfdgdfg
@@ -33,7 +22,7 @@
 06.Specialisation   : xcvxcv
 
 --------------------------------------------------------------------
-        			4th DOCTOR'S DETAILS
+                        3rd DOCTOR'S DETAILS
 --------------------------------------------------------------------
 
 01.Name             : tom
@@ -42,3 +31,14 @@
 04.Mobile-No        : 1234567890
 05.MedicalLicence   : sdcsdcsd
 06.Specialisation   : sdcsdcs
+
+--------------------------------------------------------------------
+        			4th DOCTOR'S DETAILS
+--------------------------------------------------------------------
+
+01.Name             : rat
+02.SurName          : cat
+03.Date-of-Birth    : 1987-09-09
+04.Mobile-No        : 0987654321
+05.MedicalLicence   : sadsa
+06.Specialisation   : fuck

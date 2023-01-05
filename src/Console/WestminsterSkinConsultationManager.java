@@ -47,19 +47,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                     case "5" -> west.ReadFile();
                     case "6" -> west.loaddata();
                     case "7" -> new Gui_main();
-                    case "8" -> {
-//                        try {
-//                            BufferedWriter temp = new BufferedWriter(new FileWriter("patient.txt"));
-//                            for (Consultation con : consult) {
-//                                temp.write(con.getWhichco() + "\n" +con.getName() + "\n" + con.getSurname() + "\n" + con.getDateOfBirth() + "\n" + con.getMobileNo() + "\n" + con.getPatientId() + "\n" + con.getDocconsulId() + "\n" + con.getConsulStart() + "\n" + con.getConsulEnd() + "\n" + con.getConDate() + "\n" + con.getConNote() + "\n" + con.getCost() + "\n" + con.getNotenkey()+"\n\n");
-//                            }
-//                            temp.close();
-//                        } catch (IOException e) {
-//                            System.out.println("Something Wrong !!!!! ");
-//                        }
-//                        System.out.println("Patient details saved in a \"patient.txt\" File.");
-                        start = false;
-                    }
+                    case "8" -> start = false;
                     default -> System.out.println("\nInvalid Input please Try Again Later\n");
                 }
             }catch (Exception e){
@@ -173,6 +161,8 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
             }else {
                 System.out.println("Check entered  First name or Sure name !!!!");
             }
+        }else{
+            System.out.println("A maximum of 10 doctors can be added");
         }
     }
     @Override
@@ -210,7 +200,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                         System.out.print("""
                           -----------------------------------------------------------------------------------------
                                                    Successfully removed a doctor's details
-                                                   There are\s""" +doctorArray.size()+" doctors details can see bellow\n"+ """
+                                               Details of remaining\s""" +doctorArray.size()+" doctors can be seen below\n"+ """
                          -----------------------------------------------------------------------------------------\s
                          """);
                         Alldetails("non-sort");
