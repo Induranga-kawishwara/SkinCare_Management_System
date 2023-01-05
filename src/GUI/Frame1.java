@@ -27,32 +27,49 @@ import  static Console.WestminsterSkinConsultationManager.consult;
 public class Frame1 extends GUI_table implements ActionListener {
 
 
-    private String name,surname,phoneno,docconsulId,note,sttimeHou,sttimeMin,stasettime,entimeHou,notenkey;
+    private String name;
+    private String surname;
+    private String phoneno;
+    private String docconsulId;
+    private String note;
+    private String entimeHou;
+    private String notenkey;
 
     private String filename = null;
 
-    private int cost,patId;
+    private int patId;
     private int again = 1;
 
     private LocalDate dateOfBirth,cousulDate;
 
     private LocalTime consulStart,consulEnd;
-    private JButton back,Cancel,submit,pic;
-    private JTextField getname,getbirthday,getid,getdate,getsurname,getphone;
-    private JComboBox getdoc,getstarttime1,getstarttime2, getdura;
-    private JTextArea getnote;
-    private JLabel topic,colum,topic1,jname,birthday,id,time,date,jnote,addpho,addphopath;
+    private JButton submit;
+    private JButton pic;
+    private int  randomnum = 0;
+    private final JTextField getname;
+    private final JTextField getbirthday;
+    private final JTextField getid;
+    private final JTextField getdate;
+    private final JTextField getsurname;
+    private final JTextField getphone;
+    private final JComboBox getdoc;
+    private final JComboBox getstarttime1;
+    private final JComboBox getstarttime2;
+    private final JComboBox getdura;
+    private final JTextArea getnote;
+    private final JLabel addpho;
+    private final JLabel addphopath;
     Frame1(){
 
         ImageIcon img = new ImageIcon("src/GUI/frame1.jpg");
 
 
-        topic = new JLabel();
+        JLabel topic = new JLabel();
         topic.setText("ALL DOCTORS DETAILS");
         set_lable(topic,290,20,550,20,20);
 
 
-        colum = new JLabel();
+        JLabel colum = new JLabel();
         colum.setText("|     Name     |    SurName    |   Phone-No   |   Licence    | Specialisation |");
         colum.setForeground(new Color(246, 10, 43, 255));
         set_lable(colum,39, -70, 750, 300,15);
@@ -67,12 +84,12 @@ public class Frame1 extends GUI_table implements ActionListener {
             tableModel.addRow(details);
         }
 
-        topic1 = new JLabel();
+        JLabel topic1 = new JLabel();
         topic1.setText("DOCTOR CONSULTATION");
         set_lable(topic1,280, 360, 550, 20,20);
 
 
-        jname = new JLabel();
+        JLabel jname = new JLabel();
         jname.setText("NAME                 :                    SURNAME           :");
         set_lable(jname,30, 420, 550, 20,15);
 
@@ -84,7 +101,7 @@ public class Frame1 extends GUI_table implements ActionListener {
         set_textfild(getsurname,600,425,150,20);
 
 
-        birthday = new JLabel();
+        JLabel birthday = new JLabel();
         birthday.setText("BIRTHDAY(YYY-MM-DD)  :                    PHONE NUMBER      :");
         set_lable(birthday,30, 470, 550, 20,15);
 
@@ -95,7 +112,7 @@ public class Frame1 extends GUI_table implements ActionListener {
         getphone = new JTextField();
         set_textfild(getphone,600,475,150,20);
 
-        id = new JLabel();
+        JLabel id = new JLabel();
         id.setText("PATIENT ID           :                    DOCTOR LICENCE ID :");
         set_lable(id,30, 520, 550, 20,15);
 
@@ -112,7 +129,7 @@ public class Frame1 extends GUI_table implements ActionListener {
         set_combobox(getdoc,600,525,150,20);
 
 
-        time = new JLabel();
+        JLabel time = new JLabel();
         time.setText("CONSULTATION START TIME:                 CONSULTATION DURATION:");
         set_lable(time,30, 570, 700, 20,15);
 
@@ -133,7 +150,7 @@ public class Frame1 extends GUI_table implements ActionListener {
         set_combobox(getdura,600,575,150,20);
 
 
-        date = new JLabel();
+        JLabel date = new JLabel();
         date.setText("CONSULTATION DATE(YYY-MM-DD):");
         set_lable(date,30, 620, 550, 20,15);
 
@@ -141,7 +158,7 @@ public class Frame1 extends GUI_table implements ActionListener {
         getdate = new JTextField();
         set_textfild(getdate,300,625,150,20);
 
-        jnote = new JLabel();
+        JLabel jnote = new JLabel();
         jnote.setText("ADDITIONAL NOTE :");
         set_lable(jnote,30, 670, 550, 20,15);
 
@@ -195,8 +212,9 @@ public class Frame1 extends GUI_table implements ActionListener {
             }
         }
 
+        int cost;
         if(again==1){
-            cost=(timedura*15);
+            cost =(timedura*15);
 
 
 
@@ -205,8 +223,8 @@ public class Frame1 extends GUI_table implements ActionListener {
         }
 
         if(not_equal){
-
-            consult.add(new Consultation(again,name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note,cost,notenkey));
+            randomnum=0;
+            consult.add(new Consultation(again,name, surname, dateOfBirth, phoneno,patId,docconsulId, consulStart,consulEnd,cousulDate,note, cost,notenkey));
             try {
                 BufferedWriter temp = new BufferedWriter(new FileWriter("patient.txt"));
                 for (Consultation con : consult) {
@@ -220,6 +238,9 @@ public class Frame1 extends GUI_table implements ActionListener {
 
 
         }else{
+            if(randomnum==0){
+                JOptionPane.showMessageDialog(null, "The time selected for this doctor's appointment is already reserved..!!", "Important", JOptionPane.WARNING_MESSAGE);
+            }
             int docsiz=doctorArray.size();
             String [] random = new String[docsiz];
             for(int i =0;docsiz > i ;i++){
@@ -228,7 +249,8 @@ public class Frame1 extends GUI_table implements ActionListener {
             Random rand = new Random();
             int randomIndex = rand.nextInt(random.length);
             docconsulId = random[randomIndex];
-            again = 1 ;
+//            again = again ;
+            randomnum ++;
             check_equal();
         }
     }
@@ -277,9 +299,9 @@ public class Frame1 extends GUI_table implements ActionListener {
                                 try {
                                     patId = Integer.parseInt(getid.getText());
                                     docconsulId = (String) getdoc.getSelectedItem();
-                                    sttimeHou = (String) getstarttime1.getSelectedItem();
-                                    sttimeMin = (String) getstarttime2.getSelectedItem();
-                                    stasettime = sttimeHou + ":" + sttimeMin + ":00";
+                                    String sttimeHou = (String) getstarttime1.getSelectedItem();
+                                    String sttimeMin = (String) getstarttime2.getSelectedItem();
+                                    String stasettime = sttimeHou + ":" + sttimeMin + ":00";
                                     try {
                                         consulStart = LocalTime.parse(stasettime);
                                         entimeHou = (String) getdura.getSelectedItem();
@@ -410,7 +432,7 @@ public class Frame1 extends GUI_table implements ActionListener {
 
     @Override
     public void button() {
-        back = new JButton();
+        JButton back = new JButton();
         back.setFont(new Font("SansSerif", Font.BOLD, 12));
         button_set(back,"Back",30,20,65,30);
 
@@ -420,8 +442,8 @@ public class Frame1 extends GUI_table implements ActionListener {
         submit = new JButton();
         button_set(submit,"Submit",550,920,80,30);
 
-        Cancel = new JButton();
-        button_set(Cancel,"Cancel",660,920,80,30);
+        JButton cancel = new JButton();
+        button_set(cancel,"Cancel",660,920,80,30);
 
     }
 }

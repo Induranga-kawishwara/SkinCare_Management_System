@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Base64;
@@ -18,8 +19,8 @@ import static Console.WestminsterSkinConsultationManager.consult;
 
 public class Frame1pop extends GUI_table implements ActionListener {
     private  JButton ok;
-    private  boolean pop;
-    private  String name;
+    private final boolean pop;
+    private String filename;
 
 
     Frame1pop(boolean pop,int ID , int how){
@@ -30,8 +31,9 @@ public class Frame1pop extends GUI_table implements ActionListener {
         image.setIcon(background);
         image.setBounds(0,0,500,530);
 
+        String name;
         if(pop) {
-            name="You Entered Details";
+            name ="You Entered Details";
 
             JLabel topic = new JLabel();
             topic.setText("YOUR CONSULTATION");
@@ -62,7 +64,7 @@ public class Frame1pop extends GUI_table implements ActionListener {
             this.add(topic);
             this.add(details);
         }else{
-            name="Additional Details";
+            name ="Additional Details";
 
             JLabel topic = new JLabel();
             topic.setText("ADDITIONAL NOTE : ");
@@ -115,7 +117,9 @@ public class Frame1pop extends GUI_table implements ActionListener {
 
                         CipherInputStream ciptt=new CipherInputStream(new FileInputStream(con.getPatientId()+con.getName()+con.getWhichco()+"-encrypt.jpg"), desCipher);
 
-                        FileOutputStream fileop=new FileOutputStream(con.getPatientId()+con.getName()+con.getWhichco()+"-decrypt.jpg");
+                        filename = con.getPatientId()+con.getName()+con.getWhichco()+"-decrypt.jpg";
+
+                        FileOutputStream fileop=new FileOutputStream(filename);
 
                         int j;
                         while((j=ciptt.read())!=-1)
@@ -129,7 +133,7 @@ public class Frame1pop extends GUI_table implements ActionListener {
                         Image newImg = img.getScaledInstance(addpho.getWidth(), addpho.getHeight(), Image.SCALE_SMOOTH);
                         addpho.setIcon(new ImageIcon(newImg));
 
-                    }catch (Exception Ignore){
+                    }catch (Exception ignored){
                         topic1.setOpaque(false);
                         addpho.setOpaque(false);
 
@@ -141,7 +145,6 @@ public class Frame1pop extends GUI_table implements ActionListener {
             this.add(topic);
             this.add(topic1);
             this.add(addpho);
-
 
         }
 
@@ -166,6 +169,10 @@ public class Frame1pop extends GUI_table implements ActionListener {
                 this.dispose();
                 new Gui_main();
             }else{
+                try{
+                    File file= new File(filename);
+                    file.delete();
+                }catch (Exception ignored){}
                 this.dispose();
             }
         }

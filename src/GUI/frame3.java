@@ -14,11 +14,11 @@ import static Console.WestminsterSkinConsultationManager.consult;
 
 //OUR MAIN CLASS
 public class frame3 extends GUI_table implements ActionListener {
-    private int width,height;
-    private boolean rat;
+    private final boolean rat;
     protected static int selectID ;
     private JTextField PaID;
-    private  JButton ok,submit,back;
+    private  JButton ok;
+    private JButton submit;
 
     public frame3(boolean rat, int pati){
 
@@ -40,10 +40,11 @@ public class frame3 extends GUI_table implements ActionListener {
 //        topic.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
 
 
-
+        int width;
+        int height;
         if(rat) {
-            width=500;
-            height=500;
+            width =500;
+            height =500;
             topic.setBounds(110, 50, 550, 20);
             image.setBounds(0,0,500,500);
 
@@ -63,8 +64,8 @@ public class frame3 extends GUI_table implements ActionListener {
 
 
         }else{
-            width=910;
-            height=550;
+            width =910;
+            height =550;
 
             topic.setBounds(310, 20, 550, 20);
             image.setBounds(0,0,910,550);
@@ -119,7 +120,7 @@ public class frame3 extends GUI_table implements ActionListener {
         button();
         this.add(image);
 
-        window("Your All Consultations",width,height);
+        window("Your All Consultations", width, height);
     }
     public void button_set(JButton but,String name,int x , int y) {
         but.setBounds(x,y,80,30);
@@ -136,7 +137,7 @@ public class frame3 extends GUI_table implements ActionListener {
             submit = new JButton();
             button_set(submit,"SUBMIT",280,400);
 
-            back = new JButton();
+            JButton back = new JButton();
             button_set(back,"BACK",140,400);
 
         }else{

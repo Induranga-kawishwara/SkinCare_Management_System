@@ -8,7 +8,8 @@ import java.awt.event.ActionListener;
 
 
 public class Gui_main extends GUI_table implements ActionListener {
-    private JButton button1,button2,button3;
+    private JButton button1;
+    private JButton button2;
 
     public Gui_main(){
 //        LoadFile();
@@ -69,7 +70,7 @@ public class Gui_main extends GUI_table implements ActionListener {
         button_set(button1,"CONSULTATION",120);
         button2 = new JButton();
         button_set(button2,"All DOCTORS DETAILS",200);
-        button3 = new JButton();
+        JButton button3 = new JButton();
         button_set(button3,"VIEW HISTORY",280);
 
 

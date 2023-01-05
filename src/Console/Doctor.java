@@ -3,8 +3,8 @@ package Console;
 import java.time.LocalDate;
 
 public class Doctor extends Person {
-    private String medicalLicence;
-    private String specialisation;
+    private final String medicalLicence;
+    private final String specialisation;
 
     public Doctor(String name, String surname, LocalDate dateOfBirth, String mobileNo, String medicalLicence, String specialisation) {
         super(name, surname, dateOfBirth, mobileNo);
