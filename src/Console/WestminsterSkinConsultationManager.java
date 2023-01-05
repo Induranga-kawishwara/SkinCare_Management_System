@@ -120,7 +120,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
         boolean virgin = true;
         String regex = "^[A-Za-z]\\w{2,29}$";
         Pattern p = Pattern.compile(regex);
-        if(10>doctorArray.size()) {
+        if(10>=doctorArray.size()) {
             System.out.println("------------------------ADD DOCTORS------------------------");
             System.out.print("enter your name : ");
             String name = scanner.next().trim();
