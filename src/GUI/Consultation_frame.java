@@ -280,7 +280,7 @@ public class Consultation_frame extends GUI_table implements ActionListener {
 
         if (e.getSource()== submit) {
             try {
-                String regex = "^[A-Za-z]\\w{2,29}$";
+                String regex = "[a-zA-Z]+";
                 Pattern p = Pattern.compile(regex);
                 name = get_name.getText().trim();
                 surname = get_surname.getText().trim();

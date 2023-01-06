@@ -31,7 +31,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                       =======================================================================================
                       ||                                                                                   ||
                       ||             [1] add a doctor                [5] read the file                     ||
-                      ||             [2] delete a doctor             [6] load data into the system         ||
+                      ||             [2] delete a doctor             [6] load data into the system again   ||
                       ||             [3] print the list of doctor    [7] load the GUI                      ||
                       ||             [4] save all to a file          [8] Exit from system                  ||
                       ||                                                                                   ||
@@ -118,7 +118,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
     @Override
     public void AddDoctor() {
         boolean virgin = true;
-        String regex = "^[A-Za-z]\\w{2,29}$";
+        String regex = "[a-zA-Z]+";
         Pattern p = Pattern.compile(regex);
         if(10>=doctorArray.size()) {
             System.out.println("------------------------ADD DOCTORS------------------------");
