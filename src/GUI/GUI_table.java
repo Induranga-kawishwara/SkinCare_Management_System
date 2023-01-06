@@ -5,7 +5,7 @@ import java.awt.*;
 
 public abstract class GUI_table extends JFrame {
     public abstract void button();
-    public void window(String name,int width,int height){
+    public void makeFrame(String name, int width, int height){
 
         ImageIcon img = new ImageIcon("src/GUI/ico.png");
         setIconImage(img.getImage());

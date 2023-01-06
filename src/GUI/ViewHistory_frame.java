@@ -1,10 +1,8 @@
 package GUI;
-import Console.Consultation;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.ErrorManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,19 +11,19 @@ import javax.swing.table.TableCellRenderer;
 import static Console.WestminsterSkinConsultationManager.consult;
 
 //OUR MAIN CLASS
-public class frame3 extends GUI_table implements ActionListener {
+public class ViewHistory_frame extends GUI_table implements ActionListener {
     private final boolean rat;
     protected static int selectID ;
     private JTextField PaID;
     private  JButton ok;
     private JButton submit;
 
-    public frame3(boolean rat, int pati){
+    public ViewHistory_frame(boolean start, int patientId){
 
-        this.rat = rat;
-        selectID=pati;
+        this.rat = start;
+        selectID=patientId;
 
-        ImageIcon ima = new ImageIcon("src/GUI/frame3.jpg");
+        ImageIcon ima = new ImageIcon("src/GUI/ViewHistory_frame.jpg");
 
         JLabel topic = new JLabel();
         topic.setText("Your Previous Consultations");
@@ -42,7 +40,7 @@ public class frame3 extends GUI_table implements ActionListener {
 
         int width;
         int height;
-        if(rat) {
+        if(start) {
             width =500;
             height =500;
             topic.setBounds(110, 50, 550, 20);
@@ -86,13 +84,13 @@ public class frame3 extends GUI_table implements ActionListener {
 
             for (Console.Consultation Con : consult) {
                 if(selectID == Con.getPatientId()) {
-                    String[] details = {String.valueOf(Con.getWhichco()), String.valueOf(Con.getPatientId()),Con.getName(), Con.getSurname(), String.valueOf(Con.getDateOfBirth()), Con.getMobileNo(), Con.getDocconsulId(), String.valueOf(Con.getConDate()), String.valueOf(Con.getConsulStart()), String.valueOf(Con.getConsulEnd()), String.valueOf(Con.getCost())};
+                    String[] details = {String.valueOf(Con.getConsul_No()), String.valueOf(Con.getPatientId()),Con.getName(), Con.getSurname(), String.valueOf(Con.getDateOfBirth()), Con.getMobileNo(), Con.getConsulted_DocId(), String.valueOf(Con.getConsul_Date()), String.valueOf(Con.getConsul_StartTime()), String.valueOf(Con.getConsul_EndTime()), String.valueOf(Con.getCost())};
                     tableModel.addRow(details);
                 }
 
             }
 
-            table.getColumnModel().getColumn(0).setCellRenderer(new ButtonRenderer());
+            table.getColumnModel().getColumn(0).setCellRenderer(new ButtonMake());
 
             //SET CUSTOM EDITOR TO TEAMS COLUMN
             table.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JTextField()));
@@ -120,7 +118,7 @@ public class frame3 extends GUI_table implements ActionListener {
         button();
         this.add(image);
 
-        window("Your All Consultations", width, height);
+        makeFrame("Your All Consultations", width, height);
     }
     public void button_set(JButton but,String name,int x , int y) {
         but.setBounds(x,y,80,30);
@@ -158,7 +156,7 @@ public class frame3 extends GUI_table implements ActionListener {
                 for(int i=0; i<consult.size();i++) {
                     if(patientID==consult.get(i).getPatientId()) {
                         this.dispose();
-                        new frame3(false, patientID);
+                        new ViewHistory_frame(false, patientID);
                         break;
                     }else{
                         if(i==consult.size()-1){
@@ -179,7 +177,7 @@ public class frame3 extends GUI_table implements ActionListener {
 }
 
 //BUTTON RENDERER CLASS
-class ButtonRenderer extends JButton implements  TableCellRenderer {
+class ButtonMake extends JButton implements  TableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object obj,
@@ -234,7 +232,7 @@ class ButtonEditor extends DefaultCellEditor {
 
         if(clicked)
         {
-            new Frame1pop(false, frame3.selectID,Integer.parseInt(lbl));
+            new Message_Viewer(false, ViewHistory_frame.selectID,Integer.parseInt(lbl));
             //SHOW US SOME MESSAGE
 //            JOptionPane.showMessageDialog(btn, lbl+" Clicked");
 

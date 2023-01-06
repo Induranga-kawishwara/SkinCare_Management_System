@@ -17,22 +17,22 @@ import java.util.Base64;
 
 import static Console.WestminsterSkinConsultationManager.consult;
 
-public class Frame1pop extends GUI_table implements ActionListener {
+public class Message_Viewer extends GUI_table implements ActionListener {
     private  JButton ok;
-    private final boolean pop;
+    private final boolean start;
     private String filename;
 
 
-    Frame1pop(boolean pop,int ID , int how){
-        this.pop = pop;
-        ImageIcon background = new ImageIcon("src/GUI/popup.jpg");
+    Message_Viewer(boolean start, int ID , int how){
+        this.start = start;
+        ImageIcon background = new ImageIcon("src/GUI/Message_viewer.jpg");
 
         JLabel image = new JLabel();
         image.setIcon(background);
         image.setBounds(0,0,500,530);
 
         String name;
-        if(pop) {
+        if(start) {
             name ="You Entered Details";
 
             JLabel topic = new JLabel();
@@ -51,10 +51,10 @@ public class Frame1pop extends GUI_table implements ActionListener {
                     "03.Date-of-Birth       : " + consult.get(loc).getDateOfBirth() + "<br>" +
                     "04.Mobile-No           : " + consult.get(loc).getMobileNo() + "<br>" +
                     "05.Patient-ID          : " + consult.get(loc).getPatientId() + "<br>" +
-                    "06.Consultation-Date   : " + consult.get(loc).getConDate() + "<br>" +
-                    "07.Start-Time          : " + consult.get(loc).getConsulStart() + "<br>" +
-                    "08.End-Time            : " + consult.get(loc).getConsulEnd() + "<br>" +
-                    "09.Consulted-Doctor    : " + consult.get(loc).getDocconsulId() + "<br>" +
+                    "06.Consultation-Date   : " + consult.get(loc).getConsul_Date() + "<br>" +
+                    "07.Start-Time          : " + consult.get(loc).getConsul_StartTime() + "<br>" +
+                    "08.End-Time            : " + consult.get(loc).getConsul_EndTime() + "<br>" +
+                    "09.Consulted-Doctor    : " + consult.get(loc).getConsulted_DocId() + "<br>" +
                     "10.Cost-for-Consulation: " + consult.get(loc).getCost() + "<br></html>");
 
             details.setBounds(39, 10, 400, 400);
@@ -72,11 +72,11 @@ public class Frame1pop extends GUI_table implements ActionListener {
             topic.setForeground(new Color(0x0A0A0A));
             topic.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
 
-            JTextArea getnote = new JTextArea();
-            getnote.setBounds(30,50,420,150);
-            getnote.setFont(new Font("console",Font.ITALIC,15));
-            getnote.setEditable(false);
-            getnote.setLineWrap(true);
+            JTextArea set_AdditionalNote = new JTextArea();
+            set_AdditionalNote.setBounds(30,50,420,150);
+            set_AdditionalNote.setFont(new Font("console",Font.ITALIC,15));
+            set_AdditionalNote.setEditable(false);
+            set_AdditionalNote.setLineWrap(true);
 
             JLabel topic1 = new JLabel();
             topic1.setText("PICTURE : ");
@@ -84,13 +84,13 @@ public class Frame1pop extends GUI_table implements ActionListener {
             topic1.setForeground(new Color(0x131313));
             topic1.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
 
-            JLabel addpho = new JLabel();
-            addpho.setBounds(230, 210, 220, 200);
-            addpho.setBackground(Color.white);
-            addpho.setOpaque(true);
+            JLabel add_photo = new JLabel();
+            add_photo.setBounds(230, 210, 220, 200);
+            add_photo.setBackground(Color.white);
+            add_photo.setOpaque(true);
 
             for(Consultation con : consult){
-                if(con.getWhichco()==how && con.getPatientId()==ID){
+                if(con.getConsul_No()==how && con.getPatientId()==ID){
 
                     /////////////////////Decrypt /////////////////////////////////////////////
 
@@ -101,56 +101,56 @@ public class Frame1pop extends GUI_table implements ActionListener {
                         desCipher = Cipher.getInstance("DES");
 
                         // covert  string to security
-                        byte[] encodedKey = Base64.getDecoder().decode(con.getNotenkey());
-                        SecretKey notekey = new SecretKeySpec(encodedKey, 0, encodedKey.length, "DES");
+                        byte[] encodedKey = Base64.getDecoder().decode(con.getSecurity_Key());
+                        SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "DES");
 
                         /// Decrypting text
 
-                        byte[] output =Base64.getDecoder().decode(con.getConNote());
-                        desCipher.init(Cipher.DECRYPT_MODE, notekey);
+                        byte[] output =Base64.getDecoder().decode(con.getAdditional_Note());
+                        desCipher.init(Cipher.DECRYPT_MODE, key);
                         byte[] textDecrypted1 = desCipher.doFinal(output);
 
                         // Converting decrypted byte array to string
                         String u = new String(textDecrypted1);
-                        getnote.setText(u);
+                        set_AdditionalNote.setText(u);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                        CipherInputStream ciptt=new CipherInputStream(new FileInputStream(con.getPatientId()+con.getName()+con.getWhichco()+"-encrypt.jpg"), desCipher);
+                        CipherInputStream encrypted_filePath=new CipherInputStream(new FileInputStream(con.getPatientId()+con.getName()+con.getConsul_No()+"-encrypt.jpg"), desCipher);
 
-                        filename = con.getPatientId()+con.getName()+con.getWhichco()+"-decrypt.jpg";
+                        filename = con.getPatientId()+con.getName()+con.getConsul_No()+"-decrypt.jpg";
 
-                        FileOutputStream fileop=new FileOutputStream(filename);
+                        FileOutputStream decrypt_file=new FileOutputStream(filename);
 
                         int j;
-                        while((j=ciptt.read())!=-1)
+                        while((j=encrypted_filePath.read())!=-1)
                         {
-                            fileop.write(j);
+                            decrypt_file.write(j);
                         }
-                        fileop.close();
+                        decrypt_file.close();
 
-                        ImageIcon MyImage = new ImageIcon(con.getPatientId()+con.getName()+con.getWhichco()+"-decrypt.jpg");
+                        ImageIcon MyImage = new ImageIcon(con.getPatientId()+con.getName()+con.getConsul_No()+"-decrypt.jpg");
                         Image img = MyImage.getImage();
-                        Image newImg = img.getScaledInstance(addpho.getWidth(), addpho.getHeight(), Image.SCALE_SMOOTH);
-                        addpho.setIcon(new ImageIcon(newImg));
+                        Image newImg = img.getScaledInstance(add_photo.getWidth(), add_photo.getHeight(), Image.SCALE_SMOOTH);
+                        add_photo.setIcon(new ImageIcon(newImg));
 
                     }catch (Exception ignored){
                         topic1.setOpaque(false);
-                        addpho.setOpaque(false);
+                        add_photo.setOpaque(false);
 
                     }
 
                 }
             }
-            this.add(getnote);
+            this.add(set_AdditionalNote);
             this.add(topic);
             this.add(topic1);
-            this.add(addpho);
+            this.add(add_photo);
 
         }
 
         button();
         this.add(image);
-        window(name,500,530);
+        makeFrame(name,500,530);
     }
 
 
@@ -165,7 +165,7 @@ public class Frame1pop extends GUI_table implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource()== ok) {
-            if(pop) {
+            if(start) {
                 this.dispose();
                 new Gui_main();
             }else{

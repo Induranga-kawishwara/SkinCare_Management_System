@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 
 
 public class Gui_main extends GUI_table implements ActionListener {
-    private JButton button1;
-    private JButton button2;
+    private JButton consultation;
+    private JButton doctor_details;
 
     public Gui_main(){
 //        LoadFile();
@@ -37,7 +37,7 @@ public class Gui_main extends GUI_table implements ActionListener {
         this.add(label);
         this.add(label1);
 
-        window("Westminster Skin Consultation Manager",800,500);
+        makeFrame("Westminster Skin Consultation Manager",800,500);
     }
 
     public void button_set(JButton but,String name , int y) {
@@ -52,26 +52,26 @@ public class Gui_main extends GUI_table implements ActionListener {
 }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==button1) {
+        if (e.getSource()== consultation) {
             this.dispose();
-            new Frame1();
-        } else if (e.getSource()==button2) {
+            new Consultation_frame();
+        } else if (e.getSource()== doctor_details) {
             this.dispose();
-            new Frame2(true);
+            new Doctor_frame(true);
 
         }else{
             this.dispose();
-            new frame3(true,0);
+            new ViewHistory_frame(true,0);
         }
     }
     @Override
     public void button() {
-        button1 = new JButton();
-        button_set(button1,"CONSULTATION",120);
-        button2 = new JButton();
-        button_set(button2,"All DOCTORS DETAILS",200);
-        JButton button3 = new JButton();
-        button_set(button3,"VIEW HISTORY",280);
+        consultation = new JButton();
+        button_set(consultation,"CONSULTATION",120);
+        doctor_details = new JButton();
+        button_set(doctor_details,"All DOCTORS DETAILS",200);
+        JButton history = new JButton();
+        button_set(history,"VIEW HISTORY",280);
 
 
     }

@@ -12,13 +12,13 @@ import java.util.Arrays;
 
 import static Console.WestminsterSkinConsultationManager.doctorArray;
 
-public class Frame2 extends GUI_table implements ActionListener {
+public class Doctor_frame extends GUI_table implements ActionListener {
 
     private JButton back,reset,sort;
 
-    Frame2( boolean cat){
+    Doctor_frame(boolean cat){
 
-        ImageIcon img = new ImageIcon("src/GUI/frame2.jpg");
+        ImageIcon img = new ImageIcon("src/GUI/Doctor_frame.jpg");
         JLabel topic = new JLabel();
         topic.setText("ALL DOCTORS DETAILS");
         topic.setBounds(300,20,550,20);
@@ -80,7 +80,7 @@ public class Frame2 extends GUI_table implements ActionListener {
 
         button();
         this.add(rat);
-        window("All Doctors Exist",900,500);
+        makeFrame("All Doctors Exist",900,500);
 
     }
 
@@ -99,11 +99,11 @@ public class Frame2 extends GUI_table implements ActionListener {
             new Gui_main();//animus class call
         } else if (e.getSource()==reset) {
             this.dispose();
-            new Frame2(true);
+            new Doctor_frame(true);
 
         } else if (e.getSource()==sort){
             this.dispose();
-            new Frame2(false);
+            new Doctor_frame(false);
         }
     }
     @Override
