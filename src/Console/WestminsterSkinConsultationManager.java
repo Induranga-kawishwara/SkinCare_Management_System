@@ -13,15 +13,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WestminsterSkinConsultationManager implements SkinConsultationManager{
+
+    // CREATED DOCTOR OBJECT ARRAY LIST
     public static  ArrayList<Doctor> doctorArray  = new ArrayList<>();
+    // CREATED CONSULTATION OBJECT ARRAY LIST
     public static ArrayList <Consultation> consult = new ArrayList <>();
-    
+    //CREATED A SCANNER OBJECT AND SEATED THE PUBLIC AND STATIC TO USE EVERY METHOD
     public static Scanner scanner=new Scanner(System.in);
     public static void main(String[] args) {
+        //CREATED A OBJECT
         WestminsterSkinConsultationManager west = new WestminsterSkinConsultationManager();
+        // CALL THE LOAD DATA METHOD
         west.loaddata();
+        //CALL THE PATIENT LOAD DATA METHOD
         west.paLoadFile();
         boolean start = true;
+        //USR DO WHILE LOOP TO REPEAT THE MENU UNTIL PRESS THE "8"
         do {
             try{
                 System.out.print("""
@@ -39,6 +46,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                      
                       What is your choice ?\s""");
                 String input = scanner.next();
+                //USED THE SWITCH AND CASE TO CHECK THE CONDITION
                 switch (input) {
                     case "1" -> west.AddDoctor();
                     case "2" -> west.DeleteDoctor();
@@ -56,15 +64,20 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
             }
         }while (start);
     }
+    //CREATE A METHOD TO PRINT LIST OF DOCTOR;S DATA
     public String Alldetails(String all){
+        // USED "printf" TO PRINT THE TABLE
         System.out.printf("| %-10s | %-10s | %-10s | %-13s | %-13s | %-14s |%n", "Name", "SurName", "Birthday","Mobile-NO","Licence","Specialisation");
         String run = "Stop";
         if(all.equals("sort")){
             int i = doctorArray.size();
+            // CREATED THE "sort" ARRAY TO STORE SUR NAMES
             String [] sort = new String[i];
             for (int j = 0; j < i;j++) {
                 sort[j]=doctorArray.get(j).getSurname();
             }
+
+            // ANOTHER WAY TO SORT THE ARRAY IT CALLS THE BOBBLE SORT
 //            for (int k = 0 ; k < sort.length ;k++) {
 //                for(int l =k+1 ;l<sort.length; l++ ){
 //                    if(sort[k].compareTo(sort[l])>0){
@@ -74,9 +87,14 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
 //                    }
 //                }
 //            }
+
+            //SORT THE"sort" ARRAY USING Arrays.sort(); METHOD
             Arrays.sort(sort);
+            //USED THE ENHANCED  "for" LOOP TO GET SORTED SURNAMES FROM sort ARRAY
             for (String s : sort) {
+                //USED THE ENHANCED  "FOR" LOOP TO GET STORE OBJECT IN THE DOCTORARRAY
                 for (Doctor doctor : doctorArray) {
+                    //CHECK EQUALITY OF SURNAME FROM SORT ARRAY AND SUR NAME FROM DOCTOR ARRAY USING "if" CONDITION.
                     if (s.equals(doctor.getSurname())) {
                         run = "start";
                         System.out.println("-----------------------------------------------------------------------------------------");
@@ -85,6 +103,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 }
             }
         }else {
+            //PRINT THE LIST OF DOCTOR USING "for" LOOP
             for (Doctor doctor : doctorArray) {
                 run = "start";
                 System.out.println("-----------------------------------------------------------------------------------------");
@@ -94,42 +113,60 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
         System.out.println("-----------------------------------------------------------------------------------------\n");
         return run;
     }
+
+    // CREATED THE METHOD TO LOAD PATIENT DETAILS FROM PATIENT.TXT
     public void paLoadFile() {
+        //CREATED THE temparray TO TEMPORALLY SORE THE DATA WHAT GET FROM PATIRNT.TXT
         ArrayList <String> tempArray = new ArrayList<>();
+        //SOME TIMES FILE READERS GENERATE THE IOException  ERRORS SO USED THE TRY AND CATCH TO CATCH THE ERRORS
         try {
             String temp;
+            // READ THE FILE USING BUFFERED-READER
             BufferedReader readFile =new BufferedReader(new FileReader("patient.txt"));
 
+            //USED WHILE LOOP TO RUN AGAIN AND AGAIN UNTIL FINISH LINES IN THE TXT FILE
             while (((temp= readFile.readLine()) != null)){
+                //CHECK FOR THE BLANK LINE AND IGNORE  THAT LINE
                 if(temp.equals("")){
                     continue;
                 }else {
+                    //ADD THE DATA IN TO  temparry ARRAYLIST
                     tempArray.add(temp);
                 }
             }
+            //RUN THE WHILE LOOP UNTIL temparray SIZE "0"
             while ( 0 < (tempArray.size() / 13)) {
-
+                //ADD DATA IN TO THE CONSULT OBJECT ARRAY LIST
                 consult.add(new Consultation(Integer.parseInt(tempArray.get(0)), tempArray.get(1), tempArray.get(2), LocalDate.parse(tempArray.get(3)), tempArray.get(4), Integer.parseInt(tempArray.get(5)), tempArray.get(6), LocalTime.parse(tempArray.get(7)), LocalTime.parse(tempArray.get(8)), LocalDate.parse(tempArray.get(9)), tempArray.get(10),Double.parseDouble(tempArray.get(11)),tempArray.get(12)));
+                //AFTER ADD THE DATA INTO THE ARRAY LIST , THAT DATA WILL DELETE USING CLEAR KEY WORD
                 tempArray.subList(0, 13).clear();
             }
         }catch (Exception ignored){
         }
     }
+
+    // CREATED A METHOD TO ADD DOCTORS TO SYSTEM
     @Override
     public void AddDoctor() {
         boolean virgin = true;
+        // USED REGEX TO VALIDATE THR NAME AND SURNAME
+        //YOU CAN SEE REGEX FORMAT. I USED
         String regex = "[a-zA-Z]+";
         Pattern p = Pattern.compile(regex);
+        //CHECKED THE DOCTOR ARRAY IS LESS THAN THE 10 USING "if" CONDITION.
         if(10>=doctorArray.size()) {
             System.out.println("------------------------ADD DOCTORS------------------------");
             System.out.print("enter your name : ");
+            //GOT THE USER INPUTS USING SCANNER OBJECT AND USED THE trim() KEYWORD TO IGNORE TO SPACE
             String name = scanner.next().trim();
             System.out.print("enter your surname : ");
+            //GOT THE USER INPUTS USING SCANNER OBJECT AND USED THE trim() KEYWORD TO IGNORE TO SPACE
             String surname = scanner.next().trim();
             Matcher f = p.matcher(name);
             Matcher s = p.matcher(surname);
             if(f.matches() && s.matches()){
                 System.out.print("Enter date of birth(YYYY-MM-DD) : ");
+                //GOT THE USER INPUTS USING SCANNER OBJECT , USED THE trim() KEYWORD TO IGNORE TO SPACE AND USER INPUT COVERT TO LocalDate DATA TYPE
                 LocalDate dateOfBirth = LocalDate.parse(scanner.next());
                 if(dateOfBirth.isAfter(LocalDate.now().minusYears(65)) && dateOfBirth.isBefore(LocalDate.now().minusYears(20))){
                     System.out.print("Enter mobile number: ");
@@ -159,7 +196,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                     System.out.println("Check your birthday!!");
                 }
             }else {
-                System.out.println("Check entered  First name or Sure name !!!!");
+                System.out.println("Check entered  First name or Surname !!!!");
             }
         }else{
             System.out.println("A maximum of 10 doctors can be added");

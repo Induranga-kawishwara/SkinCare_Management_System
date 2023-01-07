@@ -22,6 +22,7 @@ public class ViewHistory_frame extends GUI_table implements ActionListener {
 
         this.rat = start;
         selectID=patientId;
+        // GET A IMAGE PATH USING ImageIcoN
 
         ImageIcon ima = new ImageIcon("src/GUI/ViewHistory_frame.jpg");
 
@@ -90,9 +91,10 @@ public class ViewHistory_frame extends GUI_table implements ActionListener {
 
             }
 
+            //SET CUSTOM EDITOR TO TEAMS COLUMN
             table.getColumnModel().getColumn(0).setCellRenderer(new ButtonMake());
 
-            //SET CUSTOM EDITOR TO TEAMS COLUMN
+            //SET CUSTOM RENDERER TO TEAMS COLUMN
             table.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JTextField()));
 
             JScrollPane pane = new JScrollPane(table);
@@ -100,15 +102,6 @@ public class ViewHistory_frame extends GUI_table implements ActionListener {
             pane.setBounds(20, 70, 850, 300);
 
 
-            //DATA FOR OUR TABLE
-
-            //CREATE OUR TABLE AND SET HEADER
-
-
-            //SET CUSTOM RENDERER TO TEAMS COLUMN
-
-
-            //SCROLLPANE,SET SZE,SET CLOSE OPERATION
 
             this.add(pane);
             this.add(message);
@@ -232,9 +225,9 @@ class ButtonEditor extends DefaultCellEditor {
 
         if(clicked)
         {
+            //CALL THE MESSAGE_VIEWER FRAME AND PASS THE ARGUMENTS
             new Message_Viewer(false, ViewHistory_frame.selectID,Integer.parseInt(lbl));
-            //SHOW US SOME MESSAGE
-//            JOptionPane.showMessageDialog(btn, lbl+" Clicked");
+
 
         }
         //SET IT TO FALSE NOW THAT ITS CLICKED

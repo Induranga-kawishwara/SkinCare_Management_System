@@ -47,15 +47,6 @@ public class Doctor_frame extends GUI_table implements ActionListener {
            for (int j = 0; j < i;j++) {
                sort[j]=doctorArray.get(j).getSurname();
            }
-//           for (int k = 0 ; k < sort.length ;k++) {
-//               for(int l =k+1 ;l<sort.length; l++ ){
-//                  if(sort[k].compareTo(sort[l])>0){
-//                      String temp = sort[k];
-//                      sort[k] = sort[l];
-//                      sort[l]=temp;
-//                  }
-//               }
-//           }
            Arrays.sort(sort);
            for (String s : sort) {
                for (Doctor doctor : doctorArray) {

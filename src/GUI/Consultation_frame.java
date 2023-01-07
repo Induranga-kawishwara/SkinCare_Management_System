@@ -378,7 +378,7 @@ public class Consultation_frame extends GUI_table implements ActionListener {
                                                 ///validate cousulDAte
 
                                             } catch (Exception ignored) {
-                                                JOptionPane.showMessageDialog(null, "Check You Entered Date!!", "Error", JOptionPane.ERROR_MESSAGE);
+                                                JOptionPane.showMessageDialog(null, "Check Your Entered Date!!", "Error", JOptionPane.ERROR_MESSAGE);
                                             }
                                         } catch (Exception ignored) {
                                             JOptionPane.showMessageDialog(null, "Check You Entered Time and Duration!!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -399,7 +399,7 @@ public class Consultation_frame extends GUI_table implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Check Your Birthday!!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else{
-                        JOptionPane.showMessageDialog(null, "Check Your First Name And Surname!!", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Check Your First Name Or Surname!!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
             }catch (Exception ignored){
                 JOptionPane.showMessageDialog(null,"SOMETHING WRONG!!","Error", JOptionPane.ERROR_MESSAGE);

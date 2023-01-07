@@ -27,6 +27,8 @@ class ConsultationTest {
 
     @Test
     void setConsul_Date() {
+        consul.setConsul_Date(LocalDate.parse("2023-01-05"));
+        assertEquals(LocalDate.parse("2022-01-05"),consul.getConsul_Date());
     }
 
     @Test
@@ -40,6 +42,7 @@ class ConsultationTest {
 
     @Test
     void getConsulted_DocId() {
+        assertEquals("Dco23",consul.getConsulted_DocId());
     }
 
     @Test
@@ -48,6 +51,7 @@ class ConsultationTest {
 
     @Test
     void getAdditional_Note() {
+        assertEquals("rabbit",consul.getAdditional_Note());
     }
 
     @Test
@@ -60,10 +64,12 @@ class ConsultationTest {
 
     @Test
     void getConsul_EndTime() {
+        assertEquals(LocalTime.parse("05:12:21"),consul.getConsul_EndTime());
     }
 
     @Test
     void getCost() {
+        assertEquals(Double.parseDouble("123"),consul.getCost());
     }
 
     @Test
@@ -72,6 +78,7 @@ class ConsultationTest {
 
     @Test
     void getSecurity_Key() {
+        assertEquals("key",consul.getSecurity_Key());
     }
 
     @Test
