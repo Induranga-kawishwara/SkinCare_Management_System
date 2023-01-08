@@ -18,6 +18,8 @@ class ConsultationTest {
 
     @Test
     void setConsul_No() {
+        consul.setConsul_No(Integer.parseInt("10"));
+        assertEquals(Integer.parseInt("10"),consul.getConsul_No());
     }
 
     @Test
@@ -28,7 +30,7 @@ class ConsultationTest {
     @Test
     void setConsul_Date() {
         consul.setConsul_Date(LocalDate.parse("2023-01-05"));
-        assertEquals(LocalDate.parse("2022-01-05"),consul.getConsul_Date());
+        assertEquals(LocalDate.parse("2023-01-05"),consul.getConsul_Date());
     }
 
     @Test
@@ -38,6 +40,8 @@ class ConsultationTest {
 
     @Test
     void setConsul_StartTime() {
+        consul.setConsul_StartTime(LocalTime.parse("04:12:21"));
+        assertEquals(LocalTime.parse("04:12:21"),consul.getConsul_StartTime());
     }
 
     @Test
@@ -47,6 +51,8 @@ class ConsultationTest {
 
     @Test
     void setConsulted_DocId() {
+        consul.setConsulted_DocId("doc10");
+        assertEquals("doc10",consul.getConsulted_DocId());
     }
 
     @Test
@@ -56,10 +62,14 @@ class ConsultationTest {
 
     @Test
     void setAdditional_Note() {
+        consul.setAdditional_Note("catt");
+        assertEquals("catt",consul.getAdditional_Note());
     }
 
     @Test
     void setConsul_EndTime() {
+        consul.setConsul_EndTime(LocalTime.parse("10:12:21"));
+        assertEquals(LocalTime.parse("10:12:21"),consul.getConsul_EndTime());
     }
 
     @Test
@@ -74,6 +84,8 @@ class ConsultationTest {
 
     @Test
     void setCost() {
+        consul.setCost(Double.parseDouble("34"));
+        assertEquals(Double.parseDouble("34"),consul.getCost());
     }
 
     @Test
@@ -83,6 +95,8 @@ class ConsultationTest {
 
     @Test
     void setSecurity_Key() {
+        consul.setSecurity_Key("keytest");
+        assertEquals("keytest",consul.getSecurity_Key());
     }
 
 }

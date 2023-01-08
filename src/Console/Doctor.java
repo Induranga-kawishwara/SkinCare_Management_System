@@ -6,11 +6,15 @@ public class Doctor extends Person {
     private String medicalLicence;
     private String specialisation;
 
+    //CREATED A CONSTRUCTOR FOR THIS CLASS
+
     public Doctor(String name, String surname, LocalDate dateOfBirth, String mobileNo, String medicalLicence, String specialisation) {
         super(name, surname, dateOfBirth, mobileNo);
         this.medicalLicence = medicalLicence;
         this.specialisation = specialisation;
     }
+
+    //GETTERS AND SETTERS
 
     public String getMedicalLicence() {
         return medicalLicence;

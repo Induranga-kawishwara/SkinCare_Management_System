@@ -15,6 +15,7 @@ public class Person {
         this.dateOfBirth=dateOfBirth;
         this.mobileNo=mobileNo;
     }
+    //GETTERS AND SETTERS
 
 
     public String getName() {

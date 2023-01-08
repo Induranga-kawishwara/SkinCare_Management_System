@@ -7,9 +7,8 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WestminsterSkinConsultationManager implements SkinConsultationManager{
@@ -21,7 +20,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
     //CREATED A SCANNER OBJECT AND SEATED THE PUBLIC AND STATIC TO USE EVERY METHOD
     public static Scanner scanner=new Scanner(System.in);
     public static void main(String[] args) {
-        //CREATED A OBJECT
+        //CREATED AN OBJECT
         WestminsterSkinConsultationManager west = new WestminsterSkinConsultationManager();
         // CALL THE LOAD DATA METHOD
         west.loaddata();
@@ -40,7 +39,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                       ||             [1] add a doctor                [5] read the file                     ||
                       ||             [2] delete a doctor             [6] load data into the system again   ||
                       ||             [3] print the list of doctor    [7] load the GUI                      ||
-                      ||             [4] save all to a file          [8] Exit from system                  ||
+                      ||             [4] save all data in to a file  [8] Exit from system                  ||
                       ||                                                                                   ||
                       =======================================================================================
                      
@@ -59,7 +58,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                     default -> System.out.println("\nInvalid Input please Try Again Later\n");
                 }
             }catch (Exception e){
-                e.printStackTrace();
+//                e.printStackTrace();
                 System.out.println("Invalid Input");
             }
         }while (start);
@@ -70,11 +69,19 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
         System.out.printf("| %-10s | %-10s | %-10s | %-13s | %-13s | %-14s |%n", "Name", "SurName", "Birthday","Mobile-NO","Licence","Specialisation");
         String run = "Stop";
         if(all.equals("sort")){
-            int i = doctorArray.size();
-            // CREATED THE "sort" ARRAY TO STORE SUR NAMES
-            String [] sort = new String[i];
-            for (int j = 0; j < i;j++) {
-                sort[j]=doctorArray.get(j).getSurname();
+            //CREATED A ARRAYLIST TO SAVE DOCTOR'S SURNAMES
+            ArrayList <String> surname = new ArrayList<>();
+            //CREATED A ARRAYLIST TO SAVE SORTED SURNAME LIST
+            ArrayList <String> sort = new ArrayList<>();
+            //GET SURNAME FROM doctorArray LIST
+            for (Doctor value : doctorArray) {
+                surname.add(value.getSurname());
+            }
+            //REMOVING DUPLICATED SURNAMES USING CONTAINS
+            for (String value : surname) {
+                if (!sort.contains(value)) {
+                    sort.add(value);
+                }
             }
 
             // ANOTHER WAY TO SORT THE ARRAY IT CALLS THE BOBBLE SORT
@@ -88,8 +95,9 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
 //                }
 //            }
 
-            //SORT THE"sort" ARRAY USING Arrays.sort(); METHOD
-            Arrays.sort(sort);
+            //SORT THE"sort" ARRAY USING Collections.sort(); METHOD
+            Collections.sort(sort);
+
             //USED THE ENHANCED  "for" LOOP TO GET SORTED SURNAMES FROM sort ARRAY
             for (String s : sort) {
                 //USED THE ENHANCED  "FOR" LOOP TO GET STORE OBJECT IN THE DOCTORARRAY
@@ -149,59 +157,71 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
     @Override
     public void AddDoctor() {
         boolean virgin = true;
-        // USED REGEX TO VALIDATE THR NAME AND SURNAME
+        // USED REGEX TO VALIDATE THR NAME , SURNAME AND PHONE NUMBER
         //YOU CAN SEE REGEX FORMAT. I USED
-        String regex = "[a-zA-Z]+";
-        Pattern p = Pattern.compile(regex);
+        String nameValidate = "[a-zA-Z]+";
+        String numberValidate ="\\A[0-9]{10}\\z";
+        Pattern num = Pattern.compile(numberValidate);
+        Pattern word = Pattern.compile(nameValidate);
         //CHECKED THE DOCTOR ARRAY IS LESS THAN THE 10 USING "if" CONDITION.
         if(10>=doctorArray.size()) {
             System.out.println("------------------------ADD DOCTORS------------------------");
             System.out.print("enter your name : ");
             //GOT THE USER INPUTS USING SCANNER OBJECT AND USED THE trim() KEYWORD TO IGNORE TO SPACE
             String name = scanner.next().trim();
-            System.out.print("enter your surname : ");
-            //GOT THE USER INPUTS USING SCANNER OBJECT AND USED THE trim() KEYWORD TO IGNORE TO SPACE
-            String surname = scanner.next().trim();
-            Matcher f = p.matcher(name);
-            Matcher s = p.matcher(surname);
-            if(f.matches() && s.matches()){
-                System.out.print("Enter date of birth(YYYY-MM-DD) : ");
-                //GOT THE USER INPUTS USING SCANNER OBJECT , USED THE trim() KEYWORD TO IGNORE TO SPACE AND USER INPUT COVERT TO LocalDate DATA TYPE
-                LocalDate dateOfBirth = LocalDate.parse(scanner.next());
-                if(dateOfBirth.isAfter(LocalDate.now().minusYears(65)) && dateOfBirth.isBefore(LocalDate.now().minusYears(20))){
-                    System.out.print("Enter mobile number: ");
-                    String mobile = scanner.next().trim();
-                    // validation for mobilenumber
-                    if ( 10 == mobile.length()){
-                        Integer.parseInt(mobile);
-                        System.out.print("Enter the licence : ");
-                        String licence = scanner.next().trim();
-                        for (Doctor doctor : doctorArray) {
-                            if (licence.equals(doctor.getMedicalLicence())) {
-                                System.out.println("\n-Medical Licence Already Exists-");
-                                virgin = false;
-                                break;
+            //CHECKING NAME IS VALID OR NOT USING REGEX
+            if(word.matcher(name).matches()) {
+                System.out.print("enter your surname : ");
+                //GOT THE USER INPUTS USING SCANNER OBJECT AND USED THE trim() KEYWORD TO IGNORE TO SPACE
+                String surname = scanner.next().trim();
+                //CHECKING SURNAME IS VALID OR NOT USING REGEX
+                if(word.matcher(surname).matches()){
+                    System.out.print("Enter date of birth(YYYY-MM-DD) : ");
+                    //GOT THE USER INPUTS USING SCANNER OBJECT , USED THE trim() KEYWORD TO IGNORE TO SPACE AND USER INPUT COVERT TO LocalDate DATA TYPE
+                    LocalDate dateOfBirth = LocalDate.parse(scanner.next());
+                    //CHECKING WHETHER AGE ABOVE 22 AND BELOW 65 YEARS OF BIRTH IS ENTERED
+                    if (dateOfBirth.isAfter(LocalDate.now().minusYears(65)) && dateOfBirth.isBefore(LocalDate.now().minusYears(20))) {
+                        System.out.print("Enter mobile number: ");
+                        //GOT THE USER INPUTS USING SCANNER OBJECT AND USED THE trim() KEYWORD TO IGNORE TO SPACE
+                        String mobile = scanner.next().trim();
+                        //CHECKING MOBILE NUMBER IS VALID OR NOT USING REGEX
+                        if (num.matcher(mobile).matches()) {
+                            System.out.print("Enter the licence : ");
+                            //GOT THE USER INPUTS USING SCANNER OBJECT AND USED THE trim() KEYWORD TO IGNORE TO SPACE
+                            String licence = scanner.next().trim();
+                            //CHECKING ENTERED DOCTOR LICENCE IS ALREADY EXIST OR NOT
+                            for (Doctor doctor : doctorArray) {
+                                if (licence.equals(doctor.getMedicalLicence())) {
+                                    System.out.println("\n-Medical Licence Already Exists-");
+                                    virgin = false;
+                                    break;
+                                }
                             }
+                            if (virgin) {
+                                System.out.print("specialisation : ");
+                                String spec = scanner.next().trim();
+                                //CREATE A NEW OBJECT
+                                doctorArray.add(new Doctor(name, surname, dateOfBirth, mobile, licence, spec));
+                                System.out.println("\nDoctor Details Added Successfully!!");
+                            }
+                        } else {
+                            System.out.println("Check entered phone number!!!");
                         }
-                        if (virgin) {
-                            System.out.print("specialisation : ");
-                            String spec = scanner.next().trim();
-                            doctorArray.add(new Doctor(name, surname, dateOfBirth, mobile, licence, spec));
-                            System.out.println("\nDoctor Details Added Successfully!!");
-                        }
-                    }else{
-                        System.out.println("Check entered phone number!!!");
+                    } else {
+                        System.out.println("Check your birthday!!");
                     }
-                }else {
-                    System.out.println("Check your birthday!!");
+                } else {
+                    System.out.println("Check entered Surname !!!!");
                 }
             }else {
-                System.out.println("Check entered  First name or Surname !!!!");
+                System.out.println("Check entered  First name !!!!");
             }
         }else{
             System.out.println("A maximum of 10 doctors can be added");
         }
     }
+
+    // CREATED A DELETE-DOCTOR METHOD TO DELETE DOCTOR'S DETAILS
     @Override
     public void DeleteDoctor() {
         System.out.print("""
@@ -212,18 +232,23 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 """);
         if(Alldetails("non-sort").equals("start")){
             System.out.print("Enter the medical Licence that what you want remove : ");
+            //GOT THE USER INPUTS USING SCANNER OBJECT AND USED THE trim() KEYWORD TO IGNORE TO SPACE
             String dele = scanner.next().trim();
             for(int i = 0 ; i < doctorArray.size() ; i++){
+                //CHECKING ENTERED LICENCE WITH EXIST LICENCE IN ARRAYLIST
                 if (dele.equals(doctorArray.get(i).getMedicalLicence())){
                     System.out.print("""
                             -----------------------------------------------------------------------------------------
                                                             DELETED DOCTOR'S DETAILS
                             -----------------------------------------------------------------------------------------
                             """);
+                    //CREATING A TABLE USING printf
                     System.out.printf("| %-10s | %-10s | %-10s | %-13s | %-13s | %-14s |%n", "Name", "SurName", "Birthday","Mobile-NO","Licence","Specialisation");
                     System.out.println("-----------------------------------------------------------------------------------------");
+                    //GET DETAILS FROM ARRAY LIST WHOM WE GOING TO DELETE AND PRINT IN CONSOLE
                     System.out.printf("| %-10s | %-10s | %-10s | %-13s | %-13s | %-14s |%n",doctorArray.get(i).getName(),doctorArray.get(i).getSurname(),doctorArray.get(i).getDateOfBirth(),doctorArray.get(i).getMobileNo(),doctorArray.get(i).getMedicalLicence(),doctorArray.get(i).getSpecialisation());
                     System.out.println("-----------------------------------------------------------------------------------------\n");
+                    //REMOVE DOCTOR DETAILS FORM ARRAYLIST
                     doctorArray.remove(i);
                     if(doctorArray.size()==1){
                         System.out.print("""
@@ -251,12 +276,13 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                     }
                     break;
                 }else{
+                    //CHECKING ENTERED LICENCE NUMBER ISN'T EXIST IN  ARRAYLIST OR NOT. USING 'if' CONDITION.
                     if(i == doctorArray.size()-1){
                         System.out.println("Not exist any doctor using this licence ");
                     }
                 }
             }
-
+            //CHECK ARRAYLIST IS 0 OR NOT USING if CONDITION.
         }else{ System.out.println("Can't find any doctor details.");}
     }
 
@@ -274,6 +300,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
 
     @Override
     public void SaveFile() {
+        //SAVE DATA INTO THE FILE USING BUFFER READER
         try {
             BufferedWriter writer  = new BufferedWriter(new FileWriter("details.txt"));
             BufferedWriter temp  = new BufferedWriter(new FileWriter("temp.txt"));
@@ -322,65 +349,87 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 }
             }
             System.out.println("Successfully store data in 'details.txt' file ");
+            //CLOSING THE OPENED FILE
             writer.close();
             temp.close();
         }catch (IOException e){
             System.out.println("Something Wrong !!!!! ");
         }
     }
+    //MADE A METHOD TO READ FILE AND PRINT DETAILS ON CONSOLE
     @Override
     public void ReadFile() {
+        //READ FILE DATA USING BUFFER READER
         try {
             String line ;
             BufferedReader reader  = new BufferedReader(new FileReader("details.txt"));
+            //USED WHILE LOOP TO RUN AGAIN AND AGAIN UNTIL FINISH LINES IN THE TXT FILE
             while ((line= reader.readLine()) != null){
                 System.out.println(line);
             }
+            //CLOSE THE READIED FILE
             reader.close();
         }catch (IOException e){
             System.out.println("Something Wrong !!!!! ");
         }
     }
+    //CREATED A METHOD TO DOCTOR'S DETAILS FROM DETAILS FILE.
     @Override
     public void loaddata() {
             try {
+                //CREATED A VARIABLE TO STORE INPUT ONE BY ONE
                 String tempword;
+                //AND CREATED A ARRAYLIST TO STORE WORD WHAT SAVE IN "tempword"
                 ArrayList<String> tempArray = new ArrayList<>();
+                ////READ FILE DATA USING BUFFER READER
                 BufferedReader tempre = new BufferedReader(new FileReader("temp.txt"));
                 while ((tempword = tempre.readLine()) != null) {
                     if (tempword.equals("")) {
                         continue;
                     } else {
+                        //STORE DATA INTO THE ARRAY LIST
                         tempArray.add(tempword);
                     }
                 }
+                //CHECKS THE temparray ARRAYLIST IS EMPTY OR NOT
                 if(tempArray.size()==0){
                     System.out.println("\nNO old data found!!!!! ");
-                }
-                while ( 0 < (tempArray.size() / 6)) {
-                    if (doctorArray.size() == 0) {
-                        doctorArray.add(new Doctor(tempArray.get(0), tempArray.get(1), LocalDate.parse(tempArray.get(2)), tempArray.get(3), tempArray.get(4), tempArray.get(5)));
-                        tempArray.subList(0, 6).clear();
-                    } else {
-                        if (doctorArray.size() <= 10) {
-                            boolean virgin = true;
-                            for (Doctor doctor : doctorArray) {
-                                if(tempArray.size()>0){
-                                    if (doctor.getMedicalLicence().equals(tempArray.get(4))) {
-                                        virgin = false;
-                                        tempArray.subList(0, 6).clear();
+                }else {
+                    //RUN THE WHILE LOOP UNTIL temparray SIZE "0"
+                    while (0 < (tempArray.size() / 6)) {
+                        if (doctorArray.size() == 0) {
+                            doctorArray.add(new Doctor(tempArray.get(0), tempArray.get(1), LocalDate.parse(tempArray.get(2)), tempArray.get(3), tempArray.get(4), tempArray.get(5)));
+                            tempArray.subList(0, 6).clear();
+                        } else {
+                            //CREATED A ARRAYLIST TO SAVE DOCTOR'S SURNAMES
+                            ArrayList<String> doctorID = new ArrayList<>();
+                            //GET SURNAME FROM doctorArray LIST
+                            for (Doctor value : doctorArray) {
+                                doctorID.add(value.getMedicalLicence());
+                            }
+                            if (doctorArray.size() <= 10) {
+                                boolean virgin = true;
+
+                                //REMOVING DUPLICATED SURNAMES USING CONTAINS
+                                for (int i = 0 ; doctorID.size()>i;i++) {
+                                    if (tempArray.size() > 0) {
+                                        if (doctorID.contains(tempArray.get(4))) {
+                                            virgin = false;
+                                            tempArray.subList(0, 6).clear();
+                                        } else {
+                                            virgin = true;
+                                            break;
+                                        }
                                     } else {
-                                        virgin = true;
+                                        virgin = false;
                                         break;
                                     }
-                                }else{
-                                    virgin = false;
-                                    break;
                                 }
-                            }
-                            if (virgin) {
-                                doctorArray.add(new Doctor(tempArray.get(0), tempArray.get(1), LocalDate.parse(tempArray.get(2)), tempArray.get(3), tempArray.get(4), tempArray.get(5)));
-                                tempArray.subList(0, 6).clear();
+                                if (virgin) {
+                                    //ADD DATA IN TO THE doctorArray OBJECT ARRAY LIST
+                                    doctorArray.add(new Doctor(tempArray.get(0), tempArray.get(1), LocalDate.parse(tempArray.get(2)), tempArray.get(3), tempArray.get(4), tempArray.get(5)));
+                                    tempArray.subList(0, 6).clear();
+                                }
                             }
                         }
                     }

@@ -3,53 +3,42 @@
                         1st DOCTOR'S DETAILS
 --------------------------------------------------------------------
 
-01.Name             : asdsfsdf
-02.SurName          : sdfsdgfyfghfg
-03.Date-of-Birth    : 3009-09-09
-04.Mobile-No        : 1234567890
-05.MedicalLicence   : asdasd
-06.Specialisation   : asdasda
+01.Name             : gayana
+02.SurName          : mihiran
+03.Date-of-Birth    : 1987-09-09
+04.Mobile-No        : 0123654789
+05.MedicalLicence   : doc02
+06.Specialisation   : skin
 
 --------------------------------------------------------------------
                         2nd DOCTOR'S DETAILS
 --------------------------------------------------------------------
 
-01.Name             : dsdgfdgdfg
-02.SurName          : kdfkvjdfjv
-03.Date-of-Birth    : 2007-09-09
-04.Mobile-No        : 1234567890
-05.MedicalLicence   : cxzvcxv
-06.Specialisation   : xcvxcv
+01.Name             : aruna
+02.SurName          : shantha
+03.Date-of-Birth    : 1987-09-09
+04.Mobile-No        : 0112781951
+05.MedicalLicence   : doc03
+06.Specialisation   : skin
 
 --------------------------------------------------------------------
                         3rd DOCTOR'S DETAILS
 --------------------------------------------------------------------
 
-01.Name             : tom
-02.SurName          : captric
-03.Date-of-Birth    : 2005-09-09
-04.Mobile-No        : 1234567890
-05.MedicalLicence   : sdcsdcsd
-06.Specialisation   : sdcsdcs
+01.Name             : dayanathi
+02.SurName          : chandrika
+03.Date-of-Birth    : 1987-09-09
+04.Mobile-No        : 0123654789
+05.MedicalLicence   : doc04
+06.Specialisation   : skin
 
 --------------------------------------------------------------------
         			4th DOCTOR'S DETAILS
 --------------------------------------------------------------------
 
-01.Name             : rat
-02.SurName          : cat
+01.Name             : navindya
+02.SurName          : denipitiya
 03.Date-of-Birth    : 1987-09-09
-04.Mobile-No        : 0987654321
-05.MedicalLicence   : sadsa
-06.Specialisation   : fuck
-
---------------------------------------------------------------------
-        			5th DOCTOR'S DETAILS
---------------------------------------------------------------------
-
-01.Name             : cat
-02.SurName          : fuck
-03.Date-of-Birth    : 1978-09-09
-04.Mobile-No        : 1234567890
-05.MedicalLicence   : sdsd
-06.Specialisation   : fuckyou
+04.Mobile-No        : 0147852369
+05.MedicalLicence   : doc05
+06.Specialisation   : skin

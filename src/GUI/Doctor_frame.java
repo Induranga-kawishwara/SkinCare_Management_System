@@ -7,7 +7,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 import static Console.WestminsterSkinConsultationManager.doctorArray;
@@ -16,52 +17,65 @@ public class Doctor_frame extends GUI_table implements ActionListener {
 
     private JButton back,reset,sort;
 
-    Doctor_frame(boolean cat){
-
+    Doctor_frame(boolean start){
+        //GOT IMAGE PATH USING ImageIcon
         ImageIcon img = new ImageIcon("src/GUI/Doctor_frame.jpg");
+
+        //ADDED A TOPIC USING JLabel
         JLabel topic = new JLabel();
         topic.setText("ALL DOCTORS DETAILS");
         topic.setBounds(300,20,550,20);
         topic.setFont(new Font(Font.DIALOG_INPUT,Font.BOLD,20));
-        //topic.setForeground(new Color(17, 17, 17));
 
+        //ADDED COLUMNS IN TO THE TABLE USING JLabel
         JLabel colum = new JLabel();
         colum.setText("|    Name     |   SurName   |   Birthday    |   Phone-NO   |   Licence   |Specialisation|");
         colum.setBounds(33,-70,850,300);
         colum.setFont(new Font(Font.DIALOG_INPUT,Font.BOLD,15));
         colum.setForeground(new Color(253, 2, 2, 255));
 
-
+        //CREATED A TABLE
         DefaultTableModel tableModel = new DefaultTableModel(0,6);
         JTable table = new JTable(tableModel);
         table.setBounds(35,100,800,300);
-       if (cat){
+       if (start){
            for (Console.Doctor doctor : doctorArray) {
                String[] details = {doctor.getName(), doctor.getSurname(), String.valueOf(doctor.getDateOfBirth()), doctor.getMobileNo(), doctor.getMedicalLicence(), doctor.getSpecialisation()};
                tableModel.addRow(details);
 
            }
        }else{
-           int i = doctorArray.size();
-           String [] sort = new String[i];
-           for (int j = 0; j < i;j++) {
-               sort[j]=doctorArray.get(j).getSurname();
+           //CREATED A ARRAYLIST TO SAVE DOCTOR'S SURNAMES
+           ArrayList<String> surname = new ArrayList<>();
+           //CREATED A ARRAYLIST TO SAVE SORTED SURNAME LIST
+           ArrayList <String> sort = new ArrayList<>();
+           //GET SURNAME FROM doctorArray LIST
+           for (Doctor value : doctorArray) {
+               surname.add(value.getSurname());
            }
-           Arrays.sort(sort);
+           //REMOVING DUPLICATED SURNAMES USING CONTAINS
+           for (String value : surname) {
+               if (!sort.contains(value)) {
+                   sort.add(value);
+               }
+           }
+           Collections.sort(sort);
            for (String s : sort) {
                for (Doctor doctor : doctorArray) {
                    if (s.equals(doctor.getSurname())) {
+                       //GETTING DATA AND ASSAYING INTO THE ARRAY
                        String[] details = {doctor.getName(), doctor.getSurname(), String.valueOf(doctor.getDateOfBirth()),doctor.getMobileNo(), doctor.getMedicalLicence(), doctor.getSpecialisation()};
+                       //ADDING THE details ARRAY INTO THE TABLE AS ROW
                        tableModel.addRow(details);
                    }
                }
            }
        }
-        JLabel rat = new JLabel();
-        rat.setIcon(img);
-        rat.setBounds(0,0,900,500);
-//        rat.setpr(new Dimension(900,500));
-        //rat.setOpaque(true);
+       //ADDED BACKGROUND USING JLabel
+        JLabel background = new JLabel();
+        background.setIcon(img);
+        background.setBounds(0,0,900,500);
+
 
         this.add(topic);
         this.add(colum);
@@ -70,7 +84,8 @@ public class Doctor_frame extends GUI_table implements ActionListener {
 
 
         button();
-        this.add(rat);
+        this.add(background);
+        //CALL THE MAKE FRAME TO MAKE FRAME FOR THIS
         makeFrame("All Doctors Exist",900,500);
 
     }
@@ -87,7 +102,7 @@ public class Doctor_frame extends GUI_table implements ActionListener {
    public void actionPerformed(ActionEvent e) {
         if (e.getSource()==back) {
             this.dispose();
-            new Gui_main();//animus class call
+            new Gui_main();//ANONIMUS class call
         } else if (e.getSource()==reset) {
             this.dispose();
             new Doctor_frame(true);
@@ -97,8 +112,10 @@ public class Doctor_frame extends GUI_table implements ActionListener {
             new Doctor_frame(false);
         }
     }
+
     @Override
     public void button() {
+        //CREATING BUTTON OBJECTS
         back = new JButton();
         button_set(back,"Back",30,20,65,30);
 

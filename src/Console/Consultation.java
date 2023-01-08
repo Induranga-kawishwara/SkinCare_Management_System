@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 public class Consultation extends Patient {
 
-    //localDateTime stores both date and time unlike Local date which stores only the date
+
     private int consul_No;
     private LocalDate consul_Date;
     private LocalTime consul_StartTime;
@@ -16,7 +16,7 @@ public class Consultation extends Patient {
     private double cost;
 
 
-
+    //CREATED A CONSTRUCTOR FOR THIS CLASS
 
     public Consultation(int consul_No, String name, String surname, LocalDate dateOfBirth, String mobile_No, int patId, String consulted_DocId, LocalTime consul_StartTime, LocalTime consul_EndTime, LocalDate consul_Date, String additional_Note, double cost, String security_Key) {
         super(name,surname,dateOfBirth,mobile_No,patId);
@@ -30,8 +30,7 @@ public class Consultation extends Patient {
         this.security_Key = security_Key;
     }
 
-    //getters and setters
-    //consultation date
+    //GETTERS AND SETTERS
 
     public int getConsul_No() {
         return consul_No;
@@ -48,7 +47,7 @@ public class Consultation extends Patient {
     public void setConsul_Date(LocalDate consul_Date) {
         this.consul_Date = consul_Date;
     }
-    //consultation time
+
     public LocalTime getConsul_StartTime() {
         return consul_StartTime;
     }

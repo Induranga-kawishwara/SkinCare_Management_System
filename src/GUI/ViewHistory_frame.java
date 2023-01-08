@@ -26,6 +26,7 @@ public class ViewHistory_frame extends GUI_table implements ActionListener {
 
         ImageIcon ima = new ImageIcon("src/GUI/ViewHistory_frame.jpg");
 
+        //ADDED A TOPIC USING JLabel
         JLabel topic = new JLabel();
         topic.setText("Your Previous Consultations");
         topic.setFont (new Font ("TimesRoman", Font.BOLD | Font.ITALIC, 20));

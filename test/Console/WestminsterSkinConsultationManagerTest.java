@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WestminsterSkinConsultationManagerTest {
 
-    private static ArrayList<Doctor> DoctorArrayList = new ArrayList<Doctor>();
+    private static final ArrayList<Doctor> DoctorArrayList = new ArrayList<>();
 
     @Test
     void addDoctor() {

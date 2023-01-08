@@ -12,10 +12,11 @@ public class Gui_main extends GUI_table implements ActionListener {
     private JButton doctor_details;
 
     public Gui_main(){
-//        LoadFile();
+        //GOT IMAGE PATH USING ImageIcon
         ImageIcon img = new ImageIcon("src/GUI/home.jpg");
 
-        JLabel label = new JLabel();                                                      //Adding the Topic.
+        //ADDED A TOPIC USING JLabel
+        JLabel label = new JLabel();
         label.setText("SKIN CONSULTATION MANAGER");
         label.setIcon(img);
         label.setHorizontalTextPosition(JLabel.CENTER);
@@ -26,6 +27,7 @@ public class Gui_main extends GUI_table implements ActionListener {
         label.setBackground(Color.white);
        //label.setOpaque(true);
 
+        //ADDED BACKGROUND COLOR USING JLabel
         JLabel label1 = new JLabel();
         label1.setBounds(0,0,800,500);
         label1.setBackground(Color.white);
@@ -39,6 +41,7 @@ public class Gui_main extends GUI_table implements ActionListener {
 
         makeFrame("Westminster Skin Consultation Manager",800,500);
     }
+
 
     public void button_set(JButton but,String name , int y) {
         but.setBounds(420,y,350,40);
@@ -66,6 +69,7 @@ public class Gui_main extends GUI_table implements ActionListener {
     }
     @Override
     public void button() {
+        //CREATING BUTTON OBJECTS
         consultation = new JButton();
         button_set(consultation,"CONSULTATION",120);
         doctor_details = new JButton();

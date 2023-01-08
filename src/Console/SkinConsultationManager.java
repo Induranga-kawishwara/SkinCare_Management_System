@@ -1,6 +1,6 @@
 package Console;
 
-import java.io.IOException;
+
 
 public interface SkinConsultationManager {
 
