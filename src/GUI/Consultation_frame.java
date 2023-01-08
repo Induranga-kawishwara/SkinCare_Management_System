@@ -416,7 +416,7 @@ public class Consultation_frame extends GUI_table implements ActionListener {
                             JOptionPane.showMessageDialog(null, "Check Your Birthday!!", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Check Your First Name Or Surname!!", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Check Your  Surname!!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "Check Your First Name !!", "Error", JOptionPane.ERROR_MESSAGE);
