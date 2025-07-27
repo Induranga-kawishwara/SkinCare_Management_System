@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="1065de4a-12a2-4726-9bbd-3b8ca03594d8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../1gayana1-encrypt.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../OOP_CODE_Induranga_Kawishwara_20200688_w1913278.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../details.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../patient.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/Console/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Console/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/Console/WestminsterSkinConsultationManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/GUI/Consultation_frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/GUI/Consultation_frame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/GUI/Doctor_frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/GUI/Doctor_frame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/GUI/Message_Viewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/GUI/Message_Viewer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/GUI/ViewHistory_frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/GUI/ViewHistory_frame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../temp.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Console/ConsultationTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Console/DoctorTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Console/PatientTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Console/PersonTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Console/WestminsterSkinConsultationManagerTest.java" beforeDir="false" />
-    </list>
+    <list default="true" id="1065de4a-12a2-4726-9bbd-3b8ca03594d8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,7 +52,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1753639903839</updated>
-      <workItem from="1753639905388" duration="380000" />
+      <workItem from="1753639905388" duration="552000" />
     </task>
     <servers />
   </component>
