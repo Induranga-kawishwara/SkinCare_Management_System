@@ -1,7 +1,6 @@
 package Console;
 
 import java.time.LocalDate;
-import java.util.*;
 public class Person {
     private String name;
     private String surname;

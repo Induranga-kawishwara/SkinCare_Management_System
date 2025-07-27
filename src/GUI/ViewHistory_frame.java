@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import static Console.WestminsterSkinConsultationManager.consult;
+import static Console.AdminPanel.consult;
 
 //OUR MAIN CLASS
 public class ViewHistory_frame extends GUI_table implements ActionListener {

@@ -1,5 +1,6 @@
-package Console;
+package test.Console;
 
+import Console.Person;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -7,7 +8,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersonTest {
-    private  Person p1 = new Person("Induranga","Kawishwara", LocalDate.parse("1978-09-09"),"0123456789");
+    private Person p1 = new Person("Induranga","Kawishwara", LocalDate.parse("1978-09-09"),"0123456789");
 
     @Test
     void getName() {

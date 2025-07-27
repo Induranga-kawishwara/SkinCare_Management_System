@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-import static Console.WestminsterSkinConsultationManager.doctorArray;
+import static Console.AdminPanel.doctorArray;
 
 public class Doctor_frame extends GUI_table implements ActionListener {
 

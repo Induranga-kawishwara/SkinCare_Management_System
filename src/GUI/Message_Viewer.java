@@ -15,7 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Base64;
 
-import static Console.WestminsterSkinConsultationManager.consult;
+import static Console.AdminPanel.consult;
 
 public class Message_Viewer extends GUI_table implements ActionListener {
     private  JButton ok;
@@ -115,20 +115,18 @@ public class Message_Viewer extends GUI_table implements ActionListener {
                         set_AdditionalNote.setText(u);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                        CipherInputStream encrypted_filePath=new CipherInputStream(new FileInputStream(con.getPatientId()+con.getName()+con.getConsul_No()+"-encrypt.jpg"), desCipher);
+                        filename = con.getPatientId() + con.getName() + con.getConsul_No() + "-decrypt.jpg";
+                        try (FileInputStream fis = new FileInputStream(con.getPatientId() + con.getName() + con.getConsul_No() + "-encrypt.jpg");
+                             CipherInputStream encrypted_filePath = new CipherInputStream(fis, desCipher);
+                             FileOutputStream decrypt_file = new FileOutputStream(filename)) {
 
-                        filename = con.getPatientId()+con.getName()+con.getConsul_No()+"-decrypt.jpg";
-
-                        FileOutputStream decrypt_file=new FileOutputStream(filename);
-
-                        int j;
-                        while((j=encrypted_filePath.read())!=-1)
-                        {
-                            decrypt_file.write(j);
+                            int j;
+                            while ((j = encrypted_filePath.read()) != -1) {
+                                decrypt_file.write(j);
+                            }
                         }
-                        decrypt_file.close();
 
-                        ImageIcon MyImage = new ImageIcon(con.getPatientId()+con.getName()+con.getConsul_No()+"-decrypt.jpg");
+                        ImageIcon MyImage = new ImageIcon(filename);
                         Image img = MyImage.getImage();
                         Image newImg = img.getScaledInstance(add_photo.getWidth(), add_photo.getHeight(), Image.SCALE_SMOOTH);
                         add_photo.setIcon(new ImageIcon(newImg));

@@ -1,5 +1,6 @@
-package Console;
+package test.Console;
 
+import Console.Doctor;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class WestminsterSkinConsultationManagerTest {
+class AdminPanelTest {
 
     private static final ArrayList<Doctor> DoctorArrayList = new ArrayList<>();
 

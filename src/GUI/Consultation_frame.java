@@ -19,9 +19,9 @@ import java.util.regex.Pattern;
 import java.util.Base64;
 
 
-import static Console.WestminsterSkinConsultationManager.doctorArray;
+import static Console.AdminPanel.doctorArray;
 
-import  static Console.WestminsterSkinConsultationManager.consult;
+import  static Console.AdminPanel.consult;
 
 public class Consultation_frame extends GUI_table implements ActionListener {
 
@@ -51,10 +51,10 @@ public class Consultation_frame extends GUI_table implements ActionListener {
     private final JTextField get_consultDate;
     private final JTextField get_surname;
     private final JTextField get_mobile;
-    private final JComboBox get_docId;
-    private final JComboBox get_startTime1;
-    private final JComboBox get_startTime2;
-    private final JComboBox get_duration;
+    private final JComboBox<String> get_docId;
+    private final JComboBox<String> get_startTime1;
+    private final JComboBox<String> get_startTime2;
+    private final JComboBox<String> get_duration;
     private final JTextArea get_additional_note;
     private final JLabel add_image;
     private final JLabel add_imagePath;
@@ -130,7 +130,7 @@ public class Consultation_frame extends GUI_table implements ActionListener {
             doc[i]=doctorArray.get(i).getMedicalLicence();
         }
         //CREATED JComboBOX WITH  DOCTOR'S IDS
-        get_docId =new JComboBox(doc);
+        get_docId =new JComboBox<>(doc);
         set_combobox(get_docId,600,525,150,20);
 
         //ADDED LABEL USING JLabel
@@ -144,14 +144,14 @@ public class Consultation_frame extends GUI_table implements ActionListener {
         String[] dura = { "HH","01", "02", "03", "04", "05"};
 
         //J combo box
-        get_startTime1 =new JComboBox(hours);
+        get_startTime1 =new JComboBox<>(hours);
         set_combobox(get_startTime1,260,575,50,20);
 
 
-        get_startTime2 =new JComboBox(min);
+        get_startTime2 =new JComboBox<>(min);
         set_combobox(get_startTime2,340,575,50,20);
 
-        get_duration =new JComboBox(dura);
+        get_duration =new JComboBox<>(dura);
         set_combobox(get_duration,600,575,150,20);
 
         //ADDED LABEL USING JLabel
@@ -270,7 +270,7 @@ public class Consultation_frame extends GUI_table implements ActionListener {
         }
     }
     //CREATED METHOD TO CREATE JComboBOX AND ADD TO THE FRAME
-    public void set_combobox(JComboBox combo,int x, int y , int width , int height){
+    public void set_combobox(JComboBox<?> combo,int x, int y , int width , int height){
         combo.setBounds(x,y,width,height);
         combo.setBackground(new Color(0xFFFFFF));
         this.add(combo);
@@ -363,19 +363,16 @@ public class Consultation_frame extends GUI_table implements ActionListener {
 
                                                             security_Key = Base64.getEncoder().encodeToString(myDesKey.getEncoded());
 
-                                                            try {
+                                                            try (CipherInputStream cipt = new CipherInputStream(new FileInputStream(filename), desCipher);
+                                                                 FileOutputStream fileip = new FileOutputStream(patient_Id + name + again + "-encrypt.jpg")) {
                                                                 //GETTING THE IMAGE PATH
-                                                                CipherInputStream cipt = new CipherInputStream(new FileInputStream(filename), desCipher);
                                                                 //CREATING NEW ENCRYPTED IMAGE WITH USER NAME , PATIENT ID AND CONSULTATION NO
-                                                                FileOutputStream fileip = new FileOutputStream(patient_Id + name + again + "-encrypt.jpg");
 
                                                                 int i;
                                                                 //USED WHILE LOOP TO RUN AGAIN AND AGAIN UNTIL FINISH LINES IN THE FILE
                                                                 while ((i = cipt.read()) != -1) {
                                                                     fileip.write(i);
-
                                                                 }
-                                                                fileip.close();
                                                             } catch (Exception ignored) {}
                                                             //CALL THE CHECKS_EQUALITY METHOD
                                                             checks_equality();

@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class WestminsterSkinConsultationManager implements SkinConsultationManager{
+public class AdminPanel implements SkinConsultationManager{
 
     // CREATED DOCTOR OBJECT ARRAY LIST
     public static  ArrayList<Doctor> doctorArray  = new ArrayList<>();
@@ -21,7 +21,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
     public static Scanner scanner=new Scanner(System.in);
     public static void main(String[] args) {
         //CREATED AN OBJECT
-        WestminsterSkinConsultationManager west = new WestminsterSkinConsultationManager();
+        AdminPanel west = new AdminPanel();
         // CALL THE LOAD DATA METHOD
         west.loaddata();
         //CALL THE PATIENT LOAD DATA METHOD
@@ -33,7 +33,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 System.out.print("""
                       \n=======================================================================================
                       ||                                     MENU                                          ||
-                      ||                    (Induranga_Kawishwara-20200688-w1913278 )                      ||
+                      ||                    (SkinCare Management System AdminPanel )                       ||
                       =======================================================================================
                       ||                                                                                   ||
                       ||             [1] add a doctor                [5] read the file                     ||
@@ -127,15 +127,14 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
         //CREATED THE temparray TO TEMPORALLY SORE THE DATA WHAT GET FROM PATIRNT.TXT
         ArrayList <String> tempArray = new ArrayList<>();
         //SOME TIMES FILE READERS GENERATE THE IOException  ERRORS SO USED THE TRY AND CATCH TO CATCH THE ERRORS
-        try {
+        // READ THE FILE USING BUFFERED-READER
+        try (BufferedReader readFile = new BufferedReader(new FileReader("patient.txt"))) {
             String temp;
-            // READ THE FILE USING BUFFERED-READER
-            BufferedReader readFile =new BufferedReader(new FileReader("patient.txt"));
 
             //USED WHILE LOOP TO RUN AGAIN AND AGAIN UNTIL FINISH LINES IN THE TXT FILE
-            while (((temp= readFile.readLine()) != null)){
+            while (((temp = readFile.readLine()) != null)) {
                 //CHECK FOR THE BLANK LINE AND IGNORE  THAT LINE
-                if(temp.equals("")){
+                if(temp.isEmpty()){
                     continue;
                 }else {
                     //ADD THE DATA IN TO  temparry ARRAYLIST

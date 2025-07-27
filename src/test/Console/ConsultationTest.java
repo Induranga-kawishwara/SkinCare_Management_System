@@ -1,5 +1,6 @@
-package Console;
+package test.Console;
 
+import Console.Consultation;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

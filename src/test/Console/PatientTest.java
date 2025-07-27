@@ -1,5 +1,6 @@
-package Console;
+package test.Console;
 
+import Console.Patient;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -7,7 +8,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PatientTest {
-    private  Patient patient = new Patient("navindya","denipitiya", LocalDate.parse("2004-09-09"),"0987654321",Integer.parseInt("2004"));
+    private Patient patient = new Patient("navindya","denipitiya", LocalDate.parse("2004-09-09"),"0987654321",Integer.parseInt("2004"));
 
     @Test
     void getPatientId() {
